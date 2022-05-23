@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LrcParser", "LrcParser\LrcParser.csproj", "{FBBE39BA-A9EC-4553-9D91-E37982F11848}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LrcParser.Tests", "LrcParser.Tests\LrcParser.Tests.csproj", "{708A2363-930C-49DF-92F6-7AE8389F2B4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBBE39BA-A9EC-4553-9D91-E37982F11848}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBBE39BA-A9EC-4553-9D91-E37982F11848}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBBE39BA-A9EC-4553-9D91-E37982F11848}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBBE39BA-A9EC-4553-9D91-E37982F11848}.Release|Any CPU.Build.0 = Release|Any CPU
+		{708A2363-930C-49DF-92F6-7AE8389F2B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{708A2363-930C-49DF-92F6-7AE8389F2B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{708A2363-930C-49DF-92F6-7AE8389F2B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{708A2363-930C-49DF-92F6-7AE8389F2B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
