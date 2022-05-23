@@ -4,6 +4,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LrcParser", "LrcParser\LrcP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LrcParser.Tests", "LrcParser.Tests\LrcParser.Tests.csproj", "{708A2363-930C-49DF-92F6-7AE8389F2B4C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C94234E-F621-463E-A3EA-8DDB30D2D65B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+        .globalconfig = .globalconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
