@@ -39,8 +39,8 @@ public static class TestCaseTagHelper
 
     public static SortedDictionary<TextIndex, int?> ParseTimeTags(IEnumerable<string> strings)
     {
-        var dictionary = strings?.Select(ParseTimeTag).ToDictionary(k => k.Item1, v => v.Item2);
+        var dictionary = strings.Select(ParseTimeTag).ToDictionary(k => k.Item1, v => v.Item2);
 
-        return dictionary == null ? new SortedDictionary<TextIndex, int?>() : new SortedDictionary<TextIndex, int?>(dictionary);
+        return new SortedDictionary<TextIndex, int?>(dictionary);
     }
 }

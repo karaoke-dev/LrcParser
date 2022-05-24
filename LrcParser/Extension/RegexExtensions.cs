@@ -8,7 +8,7 @@ namespace LrcParser.Extension;
 
 internal static class RegexExtensions
 {
-    internal static TType GetGroupValue<TType>(this Match match, string key, bool useDefaultValueIfEmpty = true)
+    internal static TType? GetGroupValue<TType>(this Match match, string key, bool useDefaultValueIfEmpty = true)
     {
         string? value = match.Groups[key]?.Value;
 
