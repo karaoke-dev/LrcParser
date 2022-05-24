@@ -4,24 +4,25 @@
 using System.Text.RegularExpressions;
 using LrcParser.Model;
 using LrcParser.Parser.Lines;
+using LrcParser.Parser.Lrc.Metadata;
 using LrcParser.Parser.Lrc.Utils;
 using LrcParser.Utils;
 
 namespace LrcParser.Parser.Lrc.Lines;
 
-public class LrcLyricParser : SingleLineParser<Lyric>
+public class LrcLyricParser : SingleLineParser<LrcLyric>
 {
-    public override Lyric Decode(string text)
+    public override LrcLyric Decode(string text)
     {
         if (string.IsNullOrEmpty(text))
-            return new Lyric();
+            return new LrcLyric();
 
         var timeTagRegex = new Regex(@"\[\d\d:\d\d[:.]\d\d\]");
         var matchTimeTags = timeTagRegex.Matches(text);
 
         var endTextIndex = text.Length;
 
-        var lyric = new Lyric();
+        var lyric = new LrcLyric();
         var startIndex = 0;
 
         foreach (var match in matchTimeTags.ToArray())
@@ -50,7 +51,7 @@ public class LrcLyricParser : SingleLineParser<Lyric>
         return lyric;
     }
 
-    public override string Encode(Lyric component)
+    public override string Encode(LrcLyric component)
     {
         var text = component.Text;
 
