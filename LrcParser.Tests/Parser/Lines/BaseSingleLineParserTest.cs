@@ -5,7 +5,7 @@ using LrcParser.Parser.Lines;
 
 namespace LrcParser.Tests.Parser.Lines;
 
-public class BaseSingleLineParserTest<TParser, TModel> where TParser : SingleLineParser<TModel>, new()
+public class BaseSingleLineParserTest<TParser, TModel> where TParser : SingleLineParser<TModel>, new() where TModel : class
 {
     protected TModel Decode(string text) => new TParser().Decode(text);
 
