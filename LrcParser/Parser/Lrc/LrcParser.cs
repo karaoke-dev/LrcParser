@@ -56,10 +56,10 @@ public class LrcParser : LyricParser
                     var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) <= startTextIndex);
                     var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endTextIndex);
 
-                    if(rubyTag.StartTime != null && rubyTag.StartTime > startTimeTag.Value)
+                    if(rubyTag.StartTime.HasValue && rubyTag.StartTime > startTimeTag.Value)
                         continue;
 
-                    if(rubyTag.EndTime != null && rubyTag.EndTime < endTimeTag.Value)
+                    if(rubyTag.EndTime.HasValue && rubyTag.EndTime < endTimeTag.Value)
                         continue;
 
                     yield return new RubyTag
@@ -119,7 +119,7 @@ public class LrcParser : LyricParser
         }
 
         static SortedDictionary<TextIndex, int> getTimeTags(SortedDictionary<TextIndex, int?> timeTags)
-            => new(timeTags.Where(x => x.Value != null).ToDictionary(k => k.Key, v => v.Value.Value));
+            => new(timeTags.Where(x => x.Value.HasValue).ToDictionary(k => k.Key, v => v.Value.Value));
 
         static IEnumerable<LrcRuby> getRubyTags(Lyric lyric)
         {
@@ -133,8 +133,8 @@ public class LrcParser : LyricParser
                 var startTextIndex = TextIndexUtils.ToStringIndex(rubyTag.StartIndex);
                 var endTextIndex = TextIndexUtils.ToStringIndex(rubyTag.EndIndex);
 
-                var startTimeTag = timeTags.Reverse().LastOrDefault(x => x.Key <= startIndex && x.Value != null).Value;
-                var endTimeTag = timeTags.FirstOrDefault(x => x.Key >= endIndex && x.Value != null).Value;
+                var startTimeTag = timeTags.Reverse().LastOrDefault(x => x.Key <= startIndex && x.Value.HasValue).Value;
+                var endTimeTag = timeTags.FirstOrDefault(x => x.Key >= endIndex && x.Value.HasValue).Value;
 
                 yield return new LrcRuby
                 {
