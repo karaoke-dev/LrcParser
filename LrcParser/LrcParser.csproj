@@ -6,6 +6,26 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+    <PropertyGroup Label="Nuget">
+        <GenerateProgramFile>false</GenerateProgramFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IsPackable>true</IsPackable>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Version>1.0.0</Version>
+        <Description>Parser for encode and decode the .lrc format file</Description>
+        <Copyright>https://github.com/karaoke-dev/LrcParser</Copyright>
+        <PackageProjectUrl>https://github.com/karaoke-dev/LrcParser</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/karaoke-dev/LrcParser</PackageLicenseUrl>
+        <RepositoryUrl>https://github.com/karaoke-dev/LrcParser.git</RepositoryUrl>
+        <RepositoryType>Git</RepositoryType>
+        <PackageTags>lrc karaoke andy840119</PackageTags>
+        <Authors>andy840119</Authors>
+        <Company>karaoke --dev</Company>
+        <Product>karaoke --dev</Product>
+        <PackageReleaseNotes>喵</PackageReleaseNotes>
+        <PackageId>LrcParser</PackageId>
+        <NeutralLanguage>en</NeutralLanguage>
+    </PropertyGroup>
 
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
