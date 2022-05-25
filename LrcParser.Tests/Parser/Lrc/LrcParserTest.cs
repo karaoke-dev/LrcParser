@@ -37,11 +37,75 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         areEqual(expected, actual);
     }
 
-    [Ignore("Waiting for implementation")]
     [Test]
     public void TestDecodeWithRuby()
     {
+        const string lrc_text = "[00:01:00]島[00:02:00]\n[00:03:00]島[00:04:00]\n[00:05:00]島[00:06:00]\n"
+            + "@Ruby1=島,しま,,[00:02:00]\n@Ruby2=島,じま,[00:03:00],[00:04:00]\n@Ruby3=島,とう,[00:05:00]";
 
+        var expected = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 1000 },
+                        { new TextIndex(0, IndexState.End), 2000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "しま",
+                            StartIndex = new TextIndex(0),
+                            EndIndex = new TextIndex(0, IndexState.End)
+                        }
+                    }
+                },
+                new()
+                {
+                    Text = "島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 3000 },
+                        { new TextIndex(0, IndexState.End), 4000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "じま",
+                            StartIndex = new TextIndex(0),
+                            EndIndex = new TextIndex(0, IndexState.End)
+                        }
+                    }
+                },
+                new()
+                {
+                    Text = "島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 5000 },
+                        { new TextIndex(0, IndexState.End), 6000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "とう",
+                            StartIndex = new TextIndex(0),
+                            EndIndex = new TextIndex(0, IndexState.End)
+                        }
+                    }
+                }
+            }
+        };
+
+        var actual = Decode(lrc_text);
+        areEqual(expected, actual);
     }
 
     [TestCase("")]
@@ -83,11 +147,75 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         Assert.AreEqual(expected, actual);
     }
 
-    [Ignore("Waiting for implementation")]
     [Test]
     public void TestEncodeWithRuby()
     {
+        const string expected = "[00:01.00]島[00:02.00]\n[00:03.00]島[00:04.00]\n[00:05.00]島[00:06.00]\n\n"
+                                + "@Ruby1=島,しま,,[00:02.00]\n@Ruby2=島,じま,[00:03.00],[00:04.00]\n@Ruby3=島,とう,[00:05.00]";
 
+        var song = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 1000 },
+                        { new TextIndex(0, IndexState.End), 2000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "しま",
+                            StartIndex = new TextIndex(0),
+                            EndIndex = new TextIndex(0, IndexState.End)
+                        }
+                    }
+                },
+                new()
+                {
+                    Text = "島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 3000 },
+                        { new TextIndex(0, IndexState.End), 4000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "じま",
+                            StartIndex = new TextIndex(0),
+                            EndIndex = new TextIndex(0, IndexState.End)
+                        }
+                    }
+                },
+                new()
+                {
+                    Text = "島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 5000 },
+                        { new TextIndex(0, IndexState.End), 6000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "とう",
+                            StartIndex = new TextIndex(0),
+                            EndIndex = new TextIndex(0, IndexState.End)
+                        }
+                    }
+                }
+            }
+        };
+
+        var actual = Encode(song);
+        Assert.AreEqual(expected, actual);
     }
 
     [Test]
@@ -100,7 +228,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         Assert.AreEqual(expected, actual);
     }
 
-    private void areEqual(Song expected, Song actual)
+    private static void areEqual(Song expected, Song actual)
     {
         var expectedLyrics = expected.Lyrics;
         var actualLyrics = actual.Lyrics;
@@ -111,9 +239,24 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         }
     }
 
-    private void areEqual(Lyric expected, Lyric actual)
+    private static void areEqual(Lyric expected, Lyric actual)
     {
         Assert.AreEqual(expected.Text, actual.Text);
         Assert.AreEqual(expected.TimeTags, actual.TimeTags);
+
+        var expectedRubies = expected.RubyTags;
+        var actualRubies = actual.RubyTags;
+        var index = Math.Max(expectedRubies.Count, actualRubies.Count);
+        for (int i = 0; i < index; i++)
+        {
+            areEqual(expectedRubies[i], actualRubies[i]);
+        }
+    }
+
+    private static void areEqual(RubyTag expected, RubyTag actual)
+    {
+        Assert.AreEqual(expected.Text, actual.Text);
+        Assert.AreEqual(expected.StartIndex, actual.StartIndex);
+        Assert.AreEqual(expected.EndIndex, actual.EndIndex);
     }
 }

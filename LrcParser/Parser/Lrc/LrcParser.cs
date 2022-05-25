@@ -1,9 +1,11 @@
 // Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Text.RegularExpressions;
 using LrcParser.Model;
 using LrcParser.Parser.Lrc.Lines;
 using LrcParser.Parser.Lrc.Metadata;
+using LrcParser.Utils;
 
 namespace LrcParser.Parser.Lrc;
 
@@ -28,10 +30,44 @@ public class LrcParser : LyricParser
             Lyrics = lyrics.Select(l => new Lyric
             {
                 Text = l.Text,
-                TimeTags = l.TimeTags
-                // todo: implement the ruby parsing.
+                TimeTags = l.TimeTags,
+                RubyTags = getRubyTags(rubies, l).ToList()
             }).ToList()
         };
+
+        static IEnumerable<RubyTag> getRubyTags(IEnumerable<LrcRuby> rubyTags, LrcLyric lyric)
+        {
+            var text = lyric.Text;
+            var timeTags = lyric.TimeTags;
+            foreach (var rubyTag in rubyTags)
+            {
+                if (string.IsNullOrEmpty(rubyTag.Ruby) || string.IsNullOrEmpty(rubyTag.Parent))
+                    continue;
+
+                var matches = new Regex(rubyTag.Parent).Matches(text);
+
+                foreach (var match in matches.ToArray())
+                {
+                    var startTextIndex = match.Index;
+                    var endTextIndex = startTextIndex + match.Length;
+                    var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) <= startTextIndex);
+                    var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endTextIndex);
+
+                    if(rubyTag.StartTime != null && rubyTag.StartTime > startTimeTag.Value)
+                        continue;
+
+                    if(rubyTag.EndTime != null && rubyTag.EndTime < endTimeTag.Value)
+                        continue;
+
+                    yield return new RubyTag
+                    {
+                        Text = rubyTag.Ruby,
+                        StartIndex = startTimeTag.Key,
+                        EndIndex = endTimeTag.Key
+                    };
+                }
+            }
+        }
     }
 
     protected override IEnumerable<object> PreProcess(Song song)
@@ -49,8 +85,59 @@ public class LrcParser : LyricParser
         }
 
         // give it a line if contains ruby.
-        // yield return new object();
+        if (lyrics.Any(l => l.RubyTags.Any()))
+            yield return new object();
 
         // then, export the ruby.
+        var rubiesWithSameParent = lyrics.Select(getRubyTags).SelectMany(x => x).GroupBy(x => x.Parent);
+
+        foreach (var groupWithSameParent in rubiesWithSameParent)
+        {
+            // should process the value with same parent text.
+            var rubiesWithSameRuby = groupWithSameParent.GroupBy(x => x.Ruby).ToList();
+
+            foreach (var groupWithSameRuby in rubiesWithSameRuby)
+            {
+                // should process the value with same parent text and ruby text.
+                var isFirst = rubiesWithSameRuby.IndexOf(groupWithSameRuby) == 0;
+                var isLast = rubiesWithSameRuby.IndexOf(groupWithSameRuby) == rubiesWithSameRuby.Count - 1;
+
+                var minStartTime = isFirst ? null : groupWithSameRuby.Min(x => x.StartTime);
+                var maxEndTime = isLast ? null : groupWithSameRuby.Max(x => x.EndTime);
+
+                yield return new LrcRuby
+                {
+                    Ruby = groupWithSameRuby.Key,
+                    Parent = groupWithSameParent.Key,
+                    StartTime = minStartTime,
+                    EndTime = maxEndTime
+                };
+            }
+        }
+
+        static IEnumerable<LrcRuby> getRubyTags(Lyric lyric)
+        {
+            var timeTags = lyric.TimeTags;
+
+            foreach (var rubyTag in lyric.RubyTags)
+            {
+                var startIndex = rubyTag.StartIndex;
+                var endIndex = rubyTag.EndIndex;
+
+                var startTextIndex = TextIndexUtils.ToStringIndex(rubyTag.StartIndex);
+                var endTextIndex = TextIndexUtils.ToStringIndex(rubyTag.EndIndex);
+
+                var startTimeTag = timeTags.Reverse().LastOrDefault(x => x.Key <= startIndex && x.Value != null).Value;
+                var endTimeTag = timeTags.FirstOrDefault(x => x.Key >= endIndex && x.Value != null).Value;
+
+                yield return new LrcRuby
+                {
+                    Ruby = rubyTag.Text,
+                    Parent = lyric.Text[startTextIndex..endTextIndex],
+                    StartTime = startTimeTag,
+                    EndTime = endTimeTag,
+                };
+            }
+        }
     }
 }
