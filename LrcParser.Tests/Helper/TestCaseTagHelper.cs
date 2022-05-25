@@ -37,10 +37,24 @@ public static class TestCaseTagHelper
         return new Tuple<TextIndex, int?>(new TextIndex(index, state), time);
     }
 
-    public static SortedDictionary<TextIndex, int?> ParseTimeTags(IEnumerable<string> strings)
+    public static SortedDictionary<TextIndex, int?> ParseTimeTagsWithNullableTime(IEnumerable<string> strings)
     {
         var dictionary = strings.Select(ParseTimeTag).ToDictionary(k => k.Item1, v => v.Item2);
 
         return new SortedDictionary<TextIndex, int?>(dictionary);
+    }
+
+    public static SortedDictionary<TextIndex, int> ParseTimeTags(IEnumerable<string> strings)
+    {
+        var dictionary = ParseTimeTagsWithNullableTime(strings)
+            .ToDictionary(k => k.Key, v =>
+            {
+                if (v.Value == null)
+                    throw new ArgumentNullException(nameof(v.Value));
+
+                return v.Value.Value;
+            });
+
+        return new SortedDictionary<TextIndex, int>(dictionary);
     }
 }
