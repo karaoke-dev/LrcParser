@@ -15,5 +15,5 @@ public class LrcLyric
     /// <summary>
     /// Time tags
     /// </summary>
-    public SortedDictionary<TextIndex, int?> TimeTags { get; set; } = new();
+    public SortedDictionary<TextIndex, int> TimeTags { get; set; } = new();
 }
