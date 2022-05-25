@@ -11,5 +11,5 @@ public class BaseSingleLineParserTest<TParser, TModel> where TParser : SingleLin
 
     protected TModel Decode(string text) => new TParser().Decode(text);
 
-    protected string Encode(TModel component) => new TParser().Encode(component);
+    protected string Encode(TModel component) => new TParser().Encode(component, 0);
 }

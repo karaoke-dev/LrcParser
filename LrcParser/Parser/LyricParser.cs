@@ -25,6 +25,9 @@ public abstract class LyricParser
     /// <returns></returns>
     public Song Decode(string text)
     {
+        if (string.IsNullOrEmpty(text))
+            return new Song();
+
         var lines = text.Split('\n');
 
         // Generate all the objects.
@@ -51,12 +54,25 @@ public abstract class LyricParser
         // read all property.
         var objects = PreProcess(song);
 
+        var index = 0;
+        Type lastType = typeof(object);
+
         // convert to lines.
         var lines = objects.Select(x =>
         {
+            if (lastType != x.GetType())
+            {
+                index = 0;
+                lastType = x.GetType();
+            }
+            else
+            {
+                index++;
+            }
+
             var parser = parsers.FirstOrDefault(p => p.CanEncode(x));
 
-            return parser?.Encode(x) ?? "";
+            return parser?.Encode(x, index) ?? "";
         }).ToList();
 
         return string.Join('\n', lines);
