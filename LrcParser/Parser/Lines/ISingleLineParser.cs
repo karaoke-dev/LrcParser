@@ -11,5 +11,5 @@ public interface ISingleLineParser
 
     object Decode(string text);
 
-    string Encode(object component);
+    string Encode(object component, int index);
 }

@@ -54,7 +54,7 @@ public class LrcLyricParser : SingleLineParser<LrcLyric>
         return lyric;
     }
 
-    public override string Encode(LrcLyric component)
+    public override string Encode(LrcLyric component, int index)
     {
         var text = component.Text;
 

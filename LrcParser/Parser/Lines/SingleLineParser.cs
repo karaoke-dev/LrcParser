@@ -16,7 +16,7 @@ public abstract class SingleLineParser<T> : ISingleLineParser where T: class
 
     object ISingleLineParser.Decode(string text) => Decode(text);
 
-    public string Encode(object component) => Encode(component as T);
+    public string Encode(object component, int index) => Encode(component as T, index);
 
     /// <summary>
     /// Decode to target class and leave remain text
@@ -30,5 +30,5 @@ public abstract class SingleLineParser<T> : ISingleLineParser where T: class
     /// </summary>
     /// <param name="component"></param>
     /// <returns></returns>
-    public abstract string Encode(T component);
+    public abstract string Encode(T component, int index);
 }

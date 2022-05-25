@@ -35,16 +35,14 @@ public class LrcRubyParser : SingleLineParser<LrcRuby>
         };
     }
 
-    public override string Encode(LrcRuby component)
+    public override string Encode(LrcRuby component, int index)
     {
-        // todo: implement the index.
-        var index = 1;
         var parent = component.Parent;
         var ruby = component.Ruby;
         var startTime = component.StartTime == null ? "" : TimeTagUtils.MillionSecondToTimeTag(component.StartTime.Value);
         var endTime = component.EndTime == null ? "" : TimeTagUtils.MillionSecondToTimeTag(component.EndTime.Value);
 
-        var input = $"@Ruby{index}={parent},{ruby},{startTime},{endTime}";
+        var input = $"@Ruby{index + 1}={parent},{ruby},{startTime},{endTime}";
 
         const string remove_last_comma_pattern = @"([,]*)$";
         return Regex.Replace(input, remove_last_comma_pattern, "");
