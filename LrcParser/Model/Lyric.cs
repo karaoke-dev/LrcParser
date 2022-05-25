@@ -14,4 +14,9 @@ public class Lyric
     /// Time tags
     /// </summary>
     public SortedDictionary<TextIndex, int?> TimeTags { get; set; } = new();
+
+    /// <summary>
+    /// Ruby tags
+    /// </summary>
+    public List<RubyTag> RubyTags { get; set; } = new();
 }
