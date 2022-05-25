@@ -62,10 +62,7 @@ public class LrcLyricParser : SingleLineParser<LrcLyric>
 
         foreach (var (textIndex, time) in component.TimeTags)
         {
-            if(time == null)
-                continue;
-
-            var timeTagString = TimeTagUtils.MillionSecondToTimeTag(time.Value);
+            var timeTagString = TimeTagUtils.MillionSecondToTimeTag(time);
             var stringIndex = TextIndexUtils.ToStringIndex(textIndex);
             text = text.Insert(insertIndex + stringIndex, timeTagString);
 
