@@ -25,6 +25,9 @@ public abstract class LyricParser
     /// <returns></returns>
     public Song Decode(string text)
     {
+        if (string.IsNullOrEmpty(text))
+            return new Song();
+
         var lines = text.Split('\n');
 
         // Generate all the objects.

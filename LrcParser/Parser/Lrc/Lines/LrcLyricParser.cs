@@ -13,11 +13,11 @@ namespace LrcParser.Parser.Lrc.Lines;
 public class LrcLyricParser : SingleLineParser<LrcLyric>
 {
     public override bool CanDecode(string text)
-        => !string.IsNullOrEmpty(text);
+        => !string.IsNullOrWhiteSpace(text);
 
     public override LrcLyric Decode(string text)
     {
-        if (string.IsNullOrEmpty(text))
+        if (!CanDecode(text))
             return new LrcLyric();
 
         var timeTagRegex = new Regex(@"\[\d\d:\d\d[:.]\d\d\]");

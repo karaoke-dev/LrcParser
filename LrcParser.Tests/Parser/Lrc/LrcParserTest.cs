@@ -44,6 +44,18 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
     }
 
+    [TestCase("")]
+    [TestCase(" ")]
+    [TestCase("\n")]
+    [TestCase(" \n ")]
+    [TestCase(null)]
+    public void TestDecodeWithEmptyFile(string lrcText)
+    {
+        var expected = new Song();
+        var actual = Decode(lrcText);
+        areEqual(expected, actual);
+    }
+
     [Test]
     public void TestEncode()
     {
@@ -76,6 +88,16 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     public void TestEncodeWithRuby()
     {
 
+    }
+
+    [Test]
+    public void TestEncodeWithEmptyFile()
+    {
+        const string expected = "";
+
+        var song = new Song();
+        var actual = Encode(song);
+        Assert.AreEqual(expected, actual);
     }
 
     private void areEqual(Song expected, Song actual)
