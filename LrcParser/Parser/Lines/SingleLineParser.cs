@@ -7,8 +7,17 @@ namespace LrcParser.Parser.Lines;
 /// Base component pass string
 /// </inheritdoc>
 /// <typeparam name="T">Encode and decode object type</typeparam>
-public abstract class SingleLineParser<T>
+public abstract class SingleLineParser<T> : ISingleLineParser where T: class
 {
+    public abstract bool CanDecode(string text);
+
+    public bool CanEncode(object component)
+        => component is T;
+
+    object ISingleLineParser.Decode(string text) => Decode(text);
+
+    public string Encode(object component) => Encode(component as T);
+
     /// <summary>
     /// Decode to target class and leave remain text
     /// </summary>
