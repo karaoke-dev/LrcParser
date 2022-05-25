@@ -5,6 +5,10 @@ namespace LrcParser.Parser.Lines;
 
 public interface ISingleLineParser
 {
+    bool CanDecode(string text);
+
+    bool CanEncode(object component);
+
     object Decode(string text);
 
     string Encode(object component);

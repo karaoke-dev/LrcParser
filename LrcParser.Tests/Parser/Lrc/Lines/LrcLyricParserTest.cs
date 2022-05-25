@@ -11,6 +11,17 @@ namespace LrcParser.Tests.Parser.Lrc.Lines;
 
 public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLyric>
 {
+    [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]", true)]
+    [TestCase("karaoke", true)]
+    [TestCase("", false)]
+    [TestCase(null, false)]
+    [TestCase("@Ruby1=帰,かえ", true)] // will take off this if no other parser to process this line.
+    public void TestCanDecode(string text, bool expected)
+    {
+        var actual = CanDecode(text);
+        Assert.AreEqual(expected, actual);
+    }
+
     [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]", "帰り道は", new[]{ "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" })]
     [TestCase("帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]", "帰り道は", new[]{ "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" })]
     [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は", "帰り道は", new[]{ "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940" })]

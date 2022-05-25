@@ -11,6 +11,9 @@ namespace LrcParser.Parser.Lrc.Lines;
 
 public class LrcRubyParser : SingleLineParser<LrcRuby>
 {
+    public override bool CanDecode(string text)
+        => !string.IsNullOrEmpty(text) && text.ToLower().StartsWith("@ruby");
+
     public override LrcRuby Decode(string text)
     {
         var rubyTextRegex = new Regex("@(Ruby|ruby)(?<index>[0-9]+)=(?<text>.*$)");

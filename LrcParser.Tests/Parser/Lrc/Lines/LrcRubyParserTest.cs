@@ -10,6 +10,17 @@ namespace LrcParser.Tests.Parser.Lrc.Lines;
 
 public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby>
 {
+    [TestCase("@Ruby1=帰,かえ", true)]
+    [TestCase("", false)]
+    [TestCase(null, false)]
+    [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]", false)]
+    [TestCase("karaoke", false)]
+    public void TestCanDecode(string text, bool expected)
+    {
+        var actual = CanDecode(text);
+        Assert.AreEqual(expected, actual);
+    }
+
     [TestCase("@Ruby1=帰,かえ,[00:53:19],[01:24:77]", "帰", "かえ", 53190, 84770)]
     [TestCase("@Ruby1=帰,かえ,[01:24:77]", "帰", "かえ", 84770, null)]
     [TestCase("@Ruby1=帰,かえ,,[01:24:77]", "帰", "かえ", null, 84770)]

@@ -12,6 +12,9 @@ namespace LrcParser.Parser.Lrc.Lines;
 
 public class LrcLyricParser : SingleLineParser<LrcLyric>
 {
+    public override bool CanDecode(string text)
+        => !string.IsNullOrEmpty(text);
+
     public override LrcLyric Decode(string text)
     {
         if (string.IsNullOrEmpty(text))
