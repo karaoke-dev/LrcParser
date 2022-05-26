@@ -1,6 +1,8 @@
 // Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using LrcParser.Model;
+
 namespace LrcParser.Parser.Lrc.Metadata;
 
 /// <summary>
@@ -22,6 +24,11 @@ public class LrcRuby
     /// Ruby
     /// </summary>
     public string Ruby { get; set; } = "";
+
+    /// <summary>
+    /// Time tags
+    /// </summary>
+    public SortedDictionary<TextIndex, int> TimeTags { get; set; } = new();
 
     /// <summary>
     /// Start position

@@ -7,6 +7,11 @@ public class RubyTag
 {
     public string Text { get; set; } = "";
 
+    /// <summary>
+    /// Time tags
+    /// </summary>
+    public SortedDictionary<TextIndex, int?> TimeTags { get; set; } = new();
+
     public int StartIndex { get; set; }
 
     public int EndIndex { get; set; }
