@@ -65,8 +65,8 @@ public class LrcParser : LyricParser
                     yield return new RubyTag
                     {
                         Text = rubyTag.Ruby,
-                        StartIndex = startTimeTag.Key,
-                        EndIndex = endTimeTag.Key
+                        StartIndex = TextIndexUtils.ToStringIndex(startTimeTag.Key),
+                        EndIndex = TextIndexUtils.ToStringIndex(endTimeTag.Key)
                     };
                 }
             }
@@ -130,16 +130,13 @@ public class LrcParser : LyricParser
                 var startIndex = rubyTag.StartIndex;
                 var endIndex = rubyTag.EndIndex;
 
-                var startTextIndex = TextIndexUtils.ToStringIndex(rubyTag.StartIndex);
-                var endTextIndex = TextIndexUtils.ToStringIndex(rubyTag.EndIndex);
-
-                var startTimeTag = timeTags.Reverse().LastOrDefault(x => x.Key <= startIndex && x.Value.HasValue).Value;
-                var endTimeTag = timeTags.FirstOrDefault(x => x.Key >= endIndex && x.Value.HasValue).Value;
+                var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) <= startIndex && x.Value.HasValue).Value;
+                var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endIndex && x.Value.HasValue).Value;
 
                 yield return new LrcRuby
                 {
                     Ruby = rubyTag.Text,
-                    Parent = lyric.Text[startTextIndex..endTextIndex],
+                    Parent = lyric.Text[startIndex..endIndex],
                     StartTime = startTimeTag,
                     EndTime = endTimeTag,
                 };

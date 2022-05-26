@@ -7,7 +7,7 @@ public class RubyTag
 {
     public string Text { get; set; } = "";
 
-    public TextIndex StartIndex { get; set; }
+    public int StartIndex { get; set; }
 
-    public TextIndex EndIndex { get; set; }
+    public int EndIndex { get; set; }
 }
