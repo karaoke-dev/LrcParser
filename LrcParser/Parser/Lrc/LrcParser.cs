@@ -53,7 +53,7 @@ public class LrcParser : LyricParser
                 {
                     var startTextIndex = match.Index;
                     var endTextIndex = startTextIndex + match.Length;
-                    var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) <= startTextIndex);
+                    var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= startTextIndex);
                     var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endTextIndex);
 
                     if(rubyTag.StartTime.HasValue && rubyTag.StartTime > startTimeTag.Value)
@@ -130,7 +130,7 @@ public class LrcParser : LyricParser
                 var startIndex = rubyTag.StartIndex;
                 var endIndex = rubyTag.EndIndex;
 
-                var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) <= startIndex && x.Value.HasValue).Value;
+                var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= startIndex && x.Value.HasValue).Value;
                 var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endIndex && x.Value.HasValue).Value;
 
                 yield return new LrcRuby
