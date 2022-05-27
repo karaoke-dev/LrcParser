@@ -230,18 +230,6 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         areEqual(expected, actual);
     }
 
-    [TestCase("")]
-    [TestCase(" ")]
-    [TestCase("\n")]
-    [TestCase(" \n ")]
-    [TestCase(null)]
-    public void TestDecodeWithEmptyFile(string lrcText)
-    {
-        var expected = new Song();
-        var actual = Decode(lrcText);
-        areEqual(expected, actual);
-    }
-
     [Test]
     public void TestEncode()
     {
