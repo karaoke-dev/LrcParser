@@ -23,7 +23,7 @@ public class LrcParser : LyricParser
     protected override Song PostProcess(List<object> values)
     {
         var lyrics = values.OfType<LrcLyric>();
-        var rubies = values.OfType<LrcRuby>().Where(x => x.Ruby != x.Parent);
+        var rubies = values.OfType<LrcRuby>();
 
         return new Song
         {
@@ -46,6 +46,9 @@ public class LrcParser : LyricParser
             {
                 if (string.IsNullOrEmpty(rubyTag.Ruby) || string.IsNullOrEmpty(rubyTag.Parent))
                     continue;
+
+                if(rubyTag.Ruby == rubyTag.Parent)
+                   continue;
 
                 var matches = new Regex(rubyTag.Parent).Matches(text);
 
