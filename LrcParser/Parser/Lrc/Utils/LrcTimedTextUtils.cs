@@ -38,8 +38,10 @@ internal static class LrcTimedTextUtils
 
             // add the time-tag.
             var hasText = startIndex < endTextIndex;
-            var textIndex = text.Length - (hasText ? 0 : 1);
-            var state = hasText ? IndexState.Start : IndexState.End;
+            var isEmptyStringNext = hasText && timedText[startIndex] == ' ';
+
+            var state = hasText && !isEmptyStringNext ? IndexState.Start : IndexState.End;
+            var textIndex = text.Length - (state == IndexState.Start ? 0 : 1);
             var time = TimeTagUtils.TimeTagToMillionSecond(match.Value);
             timeTags.Add(new TextIndex(textIndex, state), time);
         }
