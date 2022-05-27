@@ -23,7 +23,7 @@ public class LrcParser : LyricParser
     protected override Song PostProcess(List<object> values)
     {
         var lyrics = values.OfType<LrcLyric>();
-        var rubies = values.OfType<LrcRuby>();
+        var rubies = values.OfType<LrcRuby>().Where(x => x.Ruby != x.Parent);
 
         return new Song
         {
