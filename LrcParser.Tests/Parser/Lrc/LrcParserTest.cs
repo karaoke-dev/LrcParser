@@ -108,6 +108,32 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         areEqual(expected, actual);
     }
 
+    [Test]
+    public void TestDecodeWithInvalid()
+    {
+        // should not generate the ruby if ruby text is same as parent text.
+        const string lrc_text = "[00:01:00]島[00:02:00]\n@Ruby1=島,島";
+
+        var expected = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 1000 },
+                        { new TextIndex(0, IndexState.End), 2000 },
+                    },
+                },
+            }
+        };
+
+        var actual = Decode(lrc_text);
+        areEqual(expected, actual);
+    }
+
     [TestCase("")]
     [TestCase(" ")]
     [TestCase("\n")]
