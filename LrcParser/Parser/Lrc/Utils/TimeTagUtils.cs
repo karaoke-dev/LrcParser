@@ -3,7 +3,7 @@
 
 namespace LrcParser.Parser.Lrc.Utils;
 
-public static class TimeTagUtils
+internal static class TimeTagUtils
 {
     private const char decimal_point = '.';
 
@@ -16,7 +16,7 @@ public static class TimeTagUtils
     /// </example>
     /// <param name="millionSecond"></param>
     /// <returns></returns>
-    public static string MillionSecondToTimeTag(int millionSecond)
+    internal static string MillionSecondToTimeTag(int millionSecond)
     {
         return millionSecond < 0
             ? ""
@@ -32,7 +32,7 @@ public static class TimeTagUtils
     /// </example>
     /// <param name="timeTag"></param>
     /// <returns></returns>
-    public static int TimeTagToMillionSecond(string timeTag)
+    internal static int TimeTagToMillionSecond(string timeTag)
     {
         if (timeTag.Length < 10 || timeTag[0] != '[' || !char.IsDigit(timeTag[1]))
             return -1;

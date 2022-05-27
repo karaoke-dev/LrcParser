@@ -22,7 +22,7 @@ public class LrcRubyParser : SingleLineParser<LrcRuby>
         var rubyTextResult = rubyTextRegex.Match(rubyTagResult[0]);
 
         var parent = rubyTextResult.GetGroupValue<string>("text")!;
-        var ruby = rubyTagResult[1];
+        var (ruby, timeTags) = LrcTimedTextUtils.TimedTextToObject(rubyTagResult[1]);
         var startTime = string.IsNullOrEmpty(rubyTagResult.ElementAtOrDefault(2)) ? default(int?) : TimeTagUtils.TimeTagToMillionSecond(rubyTagResult[2]);
         var endTime = string.IsNullOrEmpty(rubyTagResult.ElementAtOrDefault(3)) ? default(int?) : TimeTagUtils.TimeTagToMillionSecond(rubyTagResult[3]);
 
@@ -30,6 +30,7 @@ public class LrcRubyParser : SingleLineParser<LrcRuby>
         {
             Parent = parent,
             Ruby = ruby,
+            TimeTags = timeTags,
             StartTime = startTime,
             EndTime = endTime,
         };
@@ -38,7 +39,7 @@ public class LrcRubyParser : SingleLineParser<LrcRuby>
     public override string Encode(LrcRuby component, int index)
     {
         var parent = component.Parent;
-        var ruby = component.Ruby;
+        var ruby = LrcTimedTextUtils.ToTimedText(component.Ruby, component.TimeTags);
         var startTime = component.StartTime == null ? "" : TimeTagUtils.MillionSecondToTimeTag(component.StartTime.Value);
         var endTime = component.EndTime == null ? "" : TimeTagUtils.MillionSecondToTimeTag(component.EndTime.Value);
 
