@@ -40,6 +40,55 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     [Test]
     public void TestDecodeWithRuby()
     {
+        const string lrc_text = "[00:01:00]島[00:02:00]島[00:03:00]島[00:04:00]\n"
+            + "@Ruby1=島,しま,,[00:02:00]\n@Ruby2=島,じま,[00:02:00],[00:03:00]\n@Ruby3=島,とう,[00:03:00]";
+
+        var expected = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "島島島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 1000 },
+                        { new TextIndex(1), 2000 },
+                        { new TextIndex(2), 3000 },
+                        { new TextIndex(2, IndexState.End), 4000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "しま",
+                            StartIndex = 0,
+                            EndIndex = 1
+                        },
+                        new()
+                        {
+                            Text = "じま",
+                            StartIndex = 1,
+                            EndIndex = 2
+                        },
+                        new()
+                        {
+                            Text = "とう",
+                            StartIndex = 2,
+                            EndIndex = 3
+                        }
+                    }
+                },
+            }
+        };
+
+        var actual = Decode(lrc_text);
+        areEqual(expected, actual);
+    }
+
+    [Test]
+    public void TestDecodeWithRubyInDifferentLine()
+    {
         const string lrc_text = "[00:01:00]島[00:02:00]\n[00:03:00]島[00:04:00]\n[00:05:00]島[00:06:00]\n"
             + "@Ruby1=島,しま,,[00:02:00]\n@Ruby2=島,じま,[00:03:00],[00:04:00]\n@Ruby3=島,とう,[00:05:00]";
 
@@ -175,6 +224,55 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
     [Test]
     public void TestEncodeWithRuby()
+    {
+        const string expected = "[00:01.00]島[00:02.00]島[00:03.00]島[00:04.00]\n\n"
+                                + "@Ruby1=島,しま,,[00:02.00]\n@Ruby2=島,じま,[00:02.00],[00:03.00]\n@Ruby3=島,とう,[00:03.00]";
+
+        var song = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "島島島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 1000 },
+                        { new TextIndex(1), 2000 },
+                        { new TextIndex(2), 3000 },
+                        { new TextIndex(2, IndexState.End), 4000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "しま",
+                            StartIndex = 0,
+                            EndIndex = 1
+                        },
+                        new()
+                        {
+                            Text = "じま",
+                            StartIndex = 1,
+                            EndIndex = 2
+                        },
+                        new()
+                        {
+                            Text = "とう",
+                            StartIndex = 2,
+                            EndIndex = 3
+                        }
+                    }
+                },
+            }
+        };
+
+        var actual = Encode(song);
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
+    public void TestEncodeWithRubyInDifferentLine()
     {
         const string expected = "[00:01.00]島[00:02.00]\n[00:03.00]島[00:04.00]\n[00:05.00]島[00:06.00]\n\n"
                                 + "@Ruby1=島,しま,,[00:02.00]\n@Ruby2=島,じま,[00:03.00],[00:04.00]\n@Ruby3=島,とう,[00:05.00]";
