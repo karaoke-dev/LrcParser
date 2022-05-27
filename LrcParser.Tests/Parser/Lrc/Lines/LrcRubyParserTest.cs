@@ -3,6 +3,7 @@
 
 using LrcParser.Parser.Lrc.Lines;
 using LrcParser.Parser.Lrc.Metadata;
+using LrcParser.Tests.Helper;
 using LrcParser.Tests.Parser.Lines;
 using NUnit.Framework;
 
@@ -21,17 +22,18 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
         Assert.AreEqual(expected, actual);
     }
 
-    [TestCase("@Ruby1=帰,かえ,[00:53:19],[01:24:77]", "帰", "かえ", 53190, 84770)]
-    [TestCase("@Ruby1=帰,かえ,[01:24:77]", "帰", "かえ", 84770, null)]
-    [TestCase("@Ruby1=帰,かえ,,[01:24:77]", "帰", "かえ", null, 84770)]
-    [TestCase("@Ruby1=帰,かえ", "帰", "かえ", null, null)]
-    [TestCase("@Ruby1=帰,か[01:24:77]え", "帰", "か[01:24:77]え", null, null)] // todo: maybe should be able to get the time in the ruby.
-    public void TestDecode(string rubyTag, string parent, string ruby, int? startTime, int? endTime)
+    [TestCase("@Ruby1=帰,かえ,[00:53:19],[01:24:77]", "帰", "かえ", new string[] { }, 53190, 84770)]
+    [TestCase("@Ruby1=帰,かえ,[01:24:77]", "帰", "かえ", new string[] { },84770, null)]
+    [TestCase("@Ruby1=帰,かえ,,[01:24:77]", "帰", "かえ", new string[] { },null, 84770)]
+    [TestCase("@Ruby1=帰,かえ", "帰", "かえ", new string[] { },null, null)]
+    [TestCase("@Ruby1=帰,か[01:24:77]え", "帰", "かえ", new[] { "[1,start]:84770" },null, null)]
+    public void TestDecode(string rubyTag, string parent, string ruby, string[] timeTags, int? startTime, int? endTime)
     {
         var expected = new LrcRuby
         {
             Parent = parent,
             Ruby = ruby,
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             StartTime = startTime,
             EndTime = endTime
         };
@@ -44,16 +46,18 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
     }
 
 
-    [TestCase("帰", "かえ", 53190, 84770, "@Ruby1=帰,かえ,[00:53.19],[01:24.77]")]
-    [TestCase("帰", "かえ", 84770, null, "@Ruby1=帰,かえ,[01:24.77]")]
-    [TestCase("帰", "かえ", null, 84770, "@Ruby1=帰,かえ,,[01:24.77]")]
-    [TestCase("帰", "かえ", null, null, "@Ruby1=帰,かえ")]
-    public void TestEncode(string parent, string ruby, int? startTime, int? endTime, string expected)
+    [TestCase("帰", "かえ", new string[] { }, 53190, 84770, "@Ruby1=帰,かえ,[00:53.19],[01:24.77]")]
+    [TestCase("帰", "かえ", new string[] { }, 84770, null, "@Ruby1=帰,かえ,[01:24.77]")]
+    [TestCase("帰", "かえ", new string[] { }, null, 84770, "@Ruby1=帰,かえ,,[01:24.77]")]
+    [TestCase("帰", "かえ", new string[] { }, null, null, "@Ruby1=帰,かえ")]
+    [TestCase("帰", "かえ", new[] { "[1,start]:84770" }, null, null, "@Ruby1=帰,か[01:24.77]え")]
+    public void TestEncode(string parent, string ruby, string[] timeTags, int? startTime, int? endTime, string expected)
     {
         var rubyTag = new LrcRuby
         {
             Parent = parent,
             Ruby = ruby,
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             StartTime = startTime,
             EndTime = endTime
         };
