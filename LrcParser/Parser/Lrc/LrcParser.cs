@@ -23,7 +23,7 @@ public class LrcParser : LyricParser
     protected override Song PostProcess(List<object> values)
     {
         var lyrics = values.OfType<LrcLyric>();
-        var rubies = values.OfType<LrcRuby>().Where(x => x.Ruby != x.Parent);
+        var rubies = values.OfType<LrcRuby>();
 
         return new Song
         {
@@ -47,27 +47,47 @@ public class LrcParser : LyricParser
                 if (string.IsNullOrEmpty(rubyTag.Ruby) || string.IsNullOrEmpty(rubyTag.Parent))
                     continue;
 
+                if(rubyTag.Ruby == rubyTag.Parent)
+                   continue;
+
+                var hasStartTime = rubyTag.StartTime.HasValue;
+                var hasEndTime = rubyTag.EndTime.HasValue;
+
                 var matches = new Regex(rubyTag.Parent).Matches(text);
 
                 foreach (var match in matches.ToArray())
                 {
                     var startTextIndex = match.Index;
                     var endTextIndex = startTextIndex + match.Length;
-                    var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= startTextIndex);
-                    var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endTextIndex);
 
-                    if(rubyTag.StartTime.HasValue && rubyTag.StartTime > startTimeTag.Value)
-                        continue;
-
-                    if(rubyTag.EndTime.HasValue && rubyTag.EndTime < endTimeTag.Value)
-                        continue;
-
-                    yield return new RubyTag
+                    if (!hasStartTime && !hasEndTime)
                     {
-                        Text = rubyTag.Ruby,
-                        StartIndex = TextIndexUtils.ToStringIndex(startTimeTag.Key),
-                        EndIndex = TextIndexUtils.ToStringIndex(endTimeTag.Key)
-                    };
+                        yield return new RubyTag
+                        {
+                            Text = rubyTag.Ruby,
+                            StartIndex = startTextIndex,
+                            EndIndex = endTextIndex
+                        };
+                    }
+                    else
+                    {
+                        var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= startTextIndex);
+                        var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endTextIndex);
+
+                        // should not add the ruby if is not in the time-range.
+                        if(hasStartTime && rubyTag.StartTime > startTimeTag.Value)
+                            continue;
+
+                        if(hasEndTime && rubyTag.EndTime < endTimeTag.Value)
+                            continue;
+
+                        yield return new RubyTag
+                        {
+                            Text = rubyTag.Ruby,
+                            StartIndex = TextIndexUtils.ToStringIndex(startTimeTag.Key),
+                            EndIndex = TextIndexUtils.ToStringIndex(endTimeTag.Key)
+                        };
+                    }
                 }
             }
         }
