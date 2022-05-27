@@ -23,6 +23,19 @@ public class LyricParserTest : BaseLyricParserTest<LyricParserTest.TestLyricPars
         Assert.IsEmpty(actual.Lyrics);
     }
 
+    [TestCase("karaoke\nカラオケ", new[]{"karaoke", "カラオケ"})]
+    [TestCase("karaoke\rカラオケ", new[]{"karaoke", "カラオケ"})]
+    [TestCase("karaoke\r\nカラオケ", new[]{"karaoke", "カラオケ"})]
+    [TestCase("karaoke \n カラオケ", new[]{"karaoke ", " カラオケ"})] // will not handle spacing at the start or end of the lyric.
+    [TestCase("karaoke\nカラオケ\n", new[]{"karaoke", "カラオケ"})]
+    [TestCase("karaoke\rカラオケ\r", new[]{"karaoke", "カラオケ"})]
+    [TestCase("karaoke\r\nカラオケ\r\n", new[]{"karaoke", "カラオケ"})]
+    public void TestChangeNewLine(string lrcText, string[] lyrics)
+    {
+        var actual = Decode(lrcText);
+        Assert.AreEqual(lyrics, actual.Lyrics.Select(x => x.Text));
+    }
+
     public class TestLyricParser : LyricParser
     {
         public TestLyricParser()
