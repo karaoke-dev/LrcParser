@@ -319,6 +319,53 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     }
 
     [Test]
+    public void TestEncodeWithNoTimeRangeRuby()
+    {
+        const string expected = "カラオケ\n\n@Ruby1=カ,か\n@Ruby2=ラ,ら\n@Ruby3=オ,お\n@Ruby4=ケ,け";
+
+        var song = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "カラオケ",
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "か",
+                            StartIndex = 0,
+                            EndIndex = 1
+                        },
+                        new()
+                        {
+                            Text = "ら",
+                            StartIndex = 1,
+                            EndIndex = 2
+                        },
+                        new()
+                        {
+                            Text = "お",
+                            StartIndex = 2,
+                            EndIndex = 3
+                        },
+                        new()
+                        {
+                            Text = "け",
+                            StartIndex = 3,
+                            EndIndex = 4
+                        }
+                    }
+                },
+            }
+        };
+
+        var actual = Encode(song);
+        Assert.AreEqual(expected, actual);
+    }
+
+    [Test]
     public void TestEncodeWithRubyInDifferentLine()
     {
         const string expected = "[00:01.00]島[00:02.00]\n[00:03.00]島[00:04.00]\n[00:05.00]島[00:06.00]\n\n"
