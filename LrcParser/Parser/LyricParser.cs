@@ -28,7 +28,10 @@ public abstract class LyricParser
         if (string.IsNullOrEmpty(text))
             return new Song();
 
-        var lines = text.Split('\n');
+        var lines = text.Split(
+            new[] { "\r\n", "\r", "\n" },
+            StringSplitOptions.None
+        ).Where(x => !string.IsNullOrWhiteSpace(x));
 
         // Generate all the objects.
         var objects = lines.Select(x =>
