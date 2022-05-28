@@ -35,9 +35,6 @@ public class LrcParser : LyricParser
             }).ToList()
         };
 
-        static SortedDictionary<TextIndex, int?> getTimeTags(SortedDictionary<TextIndex, int> timeTags)
-            => new(timeTags.ToDictionary(k => k.Key, v => v.Value as int?));
-
         static IEnumerable<RubyTag> getRubyTags(IEnumerable<LrcRuby> rubyTags, LrcLyric lyric)
         {
             var text = lyric.Text;
@@ -65,6 +62,7 @@ public class LrcParser : LyricParser
                         yield return new RubyTag
                         {
                             Text = rubyTag.Ruby,
+                            TimeTags = getTimeTags(rubyTag.TimeTags),
                             StartIndex = startTextIndex,
                             EndIndex = endTextIndex
                         };
@@ -84,6 +82,7 @@ public class LrcParser : LyricParser
                         yield return new RubyTag
                         {
                             Text = rubyTag.Ruby,
+                            TimeTags = getTimeTags(rubyTag.TimeTags),
                             StartIndex = TextIndexUtils.ToStringIndex(startTimeTag.Key),
                             EndIndex = TextIndexUtils.ToStringIndex(endTimeTag.Key)
                         };
@@ -91,6 +90,9 @@ public class LrcParser : LyricParser
                 }
             }
         }
+
+        static SortedDictionary<TextIndex, int?> getTimeTags(SortedDictionary<TextIndex, int> timeTags)
+            => new(timeTags.ToDictionary(k => k.Key, v => v.Value as int?));
     }
 
     protected override IEnumerable<object> PreProcess(Song song)
