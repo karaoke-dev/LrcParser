@@ -158,6 +158,71 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     }
 
     [Test]
+    public void TestDecodeWithSameRubyWithDifferentRubyTimeTag()
+    {
+        var lrcText = new[]
+        {
+            "[00:01:00]島[00:02:00]島[00:03:00]島[00:04:00]",
+            "@Ruby1=島,し[00:00:40]ま,,[00:02:00]",
+            "@Ruby2=島,し[00:00:50]ま,[00:02:00],[00:03:00]",
+            "@Ruby3=島,し[00:00:60]ま,[00:03:00]"
+        };
+
+        var song = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "島島島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 1000 },
+                        { new TextIndex(1), 2000 },
+                        { new TextIndex(2), 3000 },
+                        { new TextIndex(2, IndexState.End), 4000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "しま",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 1400}
+                            },
+                            StartIndex = 0,
+                            EndIndex = 1
+                        },
+                        new()
+                        {
+                            Text = "しま",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 2500}
+                            },
+                            StartIndex = 1,
+                            EndIndex = 2
+                        },
+                        new()
+                        {
+                            Text = "しま",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 3600}
+                            },
+                            StartIndex = 2,
+                            EndIndex = 3
+                        }
+                    }
+                },
+            }
+        };
+
+        checkDecode(lrcText, song);
+    }
+
+    [Test]
     public void TestDecodeWithNoTimeRangeRuby()
     {
         var lrcText = new[]
