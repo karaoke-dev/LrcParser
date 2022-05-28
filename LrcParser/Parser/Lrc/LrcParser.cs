@@ -119,10 +119,16 @@ public class LrcParser : LyricParser
         foreach (var groupWithSameParent in rubiesWithSameParent)
         {
             // should process the value with same parent text.
-            var rubiesWithSameRuby = groupWithSameParent.GroupBy(x => x.Ruby).ToList();
+            var rubiesWithSameRuby = groupWithSameParent.GroupBy(x => new
+            {
+                x.Ruby, x.TimeTags
+            }).ToList();
 
             foreach (var groupWithSameRuby in rubiesWithSameRuby)
             {
+                var ruby = groupWithSameRuby.Key.Ruby;
+                var timeTags = groupWithSameRuby.Key.TimeTags;
+
                 // should process the value with same parent text and ruby text.
                 var isFirst = rubiesWithSameRuby.IndexOf(groupWithSameRuby) == 0;
                 var isLast = rubiesWithSameRuby.IndexOf(groupWithSameRuby) == rubiesWithSameRuby.Count - 1;
@@ -130,15 +136,11 @@ public class LrcParser : LyricParser
                 var minStartTime = isFirst ? null : groupWithSameRuby.Min(x => x.StartTime);
                 var maxEndTime = isLast ? null : groupWithSameRuby.Max(x => x.EndTime);
 
-                // todo: user better way to get the matched ruby tag.
-                var timeTags = groupWithSameRuby.Select(x => x.TimeTags).First()
-                    .ToDictionary(k => k.Key, v => v.Value);
-
                 yield return new LrcRuby
                 {
-                    Ruby = groupWithSameRuby.Key,
+                    Ruby = ruby,
                     Parent = groupWithSameParent.Key,
-                    TimeTags = new SortedDictionary<TextIndex, int>(timeTags),
+                    TimeTags = timeTags,
                     StartTime = minStartTime,
                     EndTime = maxEndTime
                 };
