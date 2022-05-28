@@ -34,7 +34,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             }
         };
         var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        AreEqual(expected, actual);
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         };
 
         var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        AreEqual(expected, actual);
     }
 
     [Test]
@@ -130,7 +130,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         };
 
         var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        AreEqual(expected, actual);
     }
 
     [Test]
@@ -201,7 +201,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         };
 
         var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        AreEqual(expected, actual);
     }
 
     [Test]
@@ -227,7 +227,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         };
 
         var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        AreEqual(expected, actual);
     }
 
     [Test]
@@ -432,38 +432,5 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         var song = new Song();
         var actual = Encode(song);
         Assert.AreEqual(expected, actual);
-    }
-
-    private static void areEqual(Song expected, Song actual)
-    {
-        var expectedLyrics = expected.Lyrics;
-        var actualLyrics = actual.Lyrics;
-        var index = Math.Max(expectedLyrics.Count, actualLyrics.Count);
-        for (int i = 0; i < index; i++)
-        {
-            areEqual(expectedLyrics[i], actualLyrics[i]);
-        }
-    }
-
-    private static void areEqual(Lyric expected, Lyric actual)
-    {
-        Assert.AreEqual(expected.Text, actual.Text);
-        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
-
-        var expectedRubies = expected.RubyTags;
-        var actualRubies = actual.RubyTags;
-        var index = Math.Max(expectedRubies.Count, actualRubies.Count);
-        for (int i = 0; i < index; i++)
-        {
-            areEqual(expectedRubies[i], actualRubies[i]);
-        }
-    }
-
-    private static void areEqual(RubyTag expected, RubyTag actual)
-    {
-        Assert.AreEqual(expected.Text, actual.Text);
-        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
-        Assert.AreEqual(expected.StartIndex, actual.StartIndex);
-        Assert.AreEqual(expected.EndIndex, actual.EndIndex);
     }
 }
