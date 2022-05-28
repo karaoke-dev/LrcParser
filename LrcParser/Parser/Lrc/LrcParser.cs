@@ -130,10 +130,16 @@ public class LrcParser : LyricParser
                 var minStartTime = isFirst ? null : groupWithSameRuby.Min(x => x.StartTime);
                 var maxEndTime = isLast ? null : groupWithSameRuby.Max(x => x.EndTime);
 
+                var timeTags = groupWithSameRuby.SelectMany(x => x.TimeTags)
+                    .Where(x => minStartTime == null || x.Value >= minStartTime)
+                    .Where(x => maxEndTime == null || x.Value <= maxEndTime)
+                    .ToDictionary(k => k.Key, v => v.Value);
+
                 yield return new LrcRuby
                 {
                     Ruby = groupWithSameRuby.Key,
                     Parent = groupWithSameParent.Key,
+                    TimeTags = new SortedDictionary<TextIndex, int>(timeTags),
                     StartTime = minStartTime,
                     EndTime = maxEndTime
                 };
@@ -159,6 +165,7 @@ public class LrcParser : LyricParser
                 {
                     Ruby = rubyTag.Text,
                     Parent = lyric.Text[startIndex..endIndex],
+                    TimeTags = getTimeTags(rubyTag.TimeTags),
                     StartTime = startTimeTag,
                     EndTime = endTimeTag,
                 };
