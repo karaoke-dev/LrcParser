@@ -1,7 +1,6 @@
 // Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using System;
 using System.Collections.Generic;
 using LrcParser.Model;
 using NUnit.Framework;
@@ -13,9 +12,12 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     [Test]
     public void TestDecode()
     {
-        const string lrc_text = "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]";
+        var lrcText = new[]
+        {
+            "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]"
+        };
 
-        var expected = new Song
+        var song = new Song
         {
             Lyrics = new List<Lyric>
             {
@@ -33,17 +35,22 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                 }
             }
         };
-        var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+
+        checkDecode(lrcText, song);
     }
 
     [Test]
     public void TestDecodeWithRuby()
     {
-        const string lrc_text = "[00:01:00]島[00:02:00]島[00:03:00]島[00:04:00]\n"
-            + "@Ruby1=島,しま,,[00:02:00]\n@Ruby2=島,じま,[00:02:00],[00:03:00]\n@Ruby3=島,とう,[00:03:00]";
+        var lrcText = new[]
+        {
+            "[00:01:00]島[00:02:00]島[00:03:00]島[00:04:00]",
+            "@Ruby1=島,しま,,[00:02:00]",
+            "@Ruby2=島,じま,[00:02:00],[00:03:00]",
+            "@Ruby3=島,とう,[00:03:00]"
+        };
 
-        var expected = new Song
+        var song = new Song
         {
             Lyrics = new List<Lyric>
             {
@@ -82,16 +89,87 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             }
         };
 
-        var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        checkDecode(lrcText, song);
+    }
+
+    [Test]
+    public void TestDecodeWithRubyAndRubyTimeTag()
+    {
+        var lrcText = new[]
+        {
+            "[00:01:00]島[00:02:00]島[00:03:00]島[00:04:00]",
+            "@Ruby1=島,し[00:01:50]ま,,[00:02:00]",
+            "@Ruby2=島,じ[00:02:50]ま,[00:02:00],[00:03:00]",
+            "@Ruby3=島,と[00:03:50]う,[00:03:00]"
+        };
+
+        var song = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "島島島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 1000 },
+                        { new TextIndex(1), 2000 },
+                        { new TextIndex(2), 3000 },
+                        { new TextIndex(2, IndexState.End), 4000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "しま",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 1500}
+                            },
+                            StartIndex = 0,
+                            EndIndex = 1
+                        },
+                        new()
+                        {
+                            Text = "じま",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 2500}
+                            },
+                            StartIndex = 1,
+                            EndIndex = 2
+                        },
+                        new()
+                        {
+                            Text = "とう",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 3500}
+                            },
+                            StartIndex = 2,
+                            EndIndex = 3
+                        }
+                    }
+                },
+            }
+        };
+
+        checkDecode(lrcText, song);
     }
 
     [Test]
     public void TestDecodeWithNoTimeRangeRuby()
     {
-        const string lrc_text = "カラオケ\n@Ruby1=カ,か\n@Ruby2=ラ,ら\n@Ruby3=オ,お\n@Ruby4=ケ,け";
+        var lrcText = new[]
+        {
+            "カラオケ",
+            "@Ruby1=カ,か",
+            "@Ruby2=ラ,ら",
+            "@Ruby3=オ,お",
+            "@Ruby4=ケ,け"
+        };
 
-        var expected = new Song
+        var song = new Song
         {
             Lyrics = new List<Lyric>
             {
@@ -129,17 +207,23 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             }
         };
 
-        var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        checkDecode(lrcText, song);
     }
 
     [Test]
     public void TestDecodeWithRubyInDifferentLine()
     {
-        const string lrc_text = "[00:01:00]島[00:02:00]\n[00:03:00]島[00:04:00]\n[00:05:00]島[00:06:00]\n"
-            + "@Ruby1=島,しま,,[00:02:00]\n@Ruby2=島,じま,[00:03:00],[00:04:00]\n@Ruby3=島,とう,[00:05:00]";
+        var lrcText = new[]
+        {
+            "[00:01:00]島[00:02:00]",
+            "[00:03:00]島[00:04:00]",
+            "[00:05:00]島[00:06:00]",
+            "@Ruby1=島,しま,,[00:02:00]",
+            "@Ruby2=島,じま,[00:03:00],[00:04:00]",
+            "@Ruby3=島,とう,[00:05:00]"
+        };
 
-        var expected = new Song
+        var song = new Song
         {
             Lyrics = new List<Lyric>
             {
@@ -200,17 +284,20 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             }
         };
 
-        var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        checkDecode(lrcText, song);
     }
 
     [Test]
     public void TestDecodeWithInvalid()
     {
         // should not generate the ruby if ruby text is same as parent text.
-        const string lrc_text = "[00:01:00]島[00:02:00]\n@Ruby1=島,島";
+        var lrcText = new[]
+        {
+            "[00:01:00]島[00:02:00]",
+            "@Ruby1=島,島"
+        };
 
-        var expected = new Song
+        var song = new Song
         {
             Lyrics = new List<Lyric>
             {
@@ -226,15 +313,12 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             }
         };
 
-        var actual = Decode(lrc_text);
-        areEqual(expected, actual);
+        checkDecode(lrcText, song);
     }
 
     [Test]
     public void TestEncode()
     {
-        const string expected = "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]";
-
         var song = new Song
         {
             Lyrics = new List<Lyric>
@@ -253,16 +337,18 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                 }
             }
         };
-        var actual = Encode(song);
-        Assert.AreEqual(expected, actual);
+
+        var lrcText = new[]
+        {
+            "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]"
+        };
+
+        checkEncode(song, lrcText);
     }
 
     [Test]
     public void TestEncodeWithRuby()
     {
-        const string expected = "[00:01.00]島[00:02.00]島[00:03.00]島[00:04.00]\n\n"
-                                + "@Ruby1=島,しま,,[00:02.00]\n@Ruby2=島,じま,[00:02.00],[00:03.00]\n@Ruby3=島,とう,[00:03.00]";
-
         var song = new Song
         {
             Lyrics = new List<Lyric>
@@ -302,15 +388,87 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             }
         };
 
-        var actual = Encode(song);
-        Assert.AreEqual(expected, actual);
+        var lrcText = new[]
+        {
+            "[00:01.00]島[00:02.00]島[00:03.00]島[00:04.00]",
+            "",
+            "@Ruby1=島,しま,,[00:02.00]",
+            "@Ruby2=島,じま,[00:02.00],[00:03.00]",
+            "@Ruby3=島,とう,[00:03.00]"
+        };
+
+        checkEncode(song, lrcText);
+    }
+
+    [Test]
+    public void TestEncodeWithRubyAndRubyTimeTag()
+    {
+        var song = new Song
+        {
+            Lyrics = new List<Lyric>
+            {
+                new()
+                {
+                    Text = "島島島",
+                    TimeTags = new SortedDictionary<TextIndex, int?>
+                    {
+                        { new TextIndex(0), 1000 },
+                        { new TextIndex(1), 2000 },
+                        { new TextIndex(2), 3000 },
+                        { new TextIndex(2, IndexState.End), 4000 },
+                    },
+                    RubyTags = new List<RubyTag>
+                    {
+                        new()
+                        {
+                            Text = "しま",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 1500}
+                            },
+                            StartIndex = 0,
+                            EndIndex = 1
+                        },
+                        new()
+                        {
+                            Text = "じま",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 2500}
+                            },
+                            StartIndex = 1,
+                            EndIndex = 2
+                        },
+                        new()
+                        {
+                            Text = "とう",
+                            TimeTags = new SortedDictionary<TextIndex, int?>
+                            {
+                                {new TextIndex(1), 3500}
+                            },
+                            StartIndex = 2,
+                            EndIndex = 3
+                        }
+                    }
+                },
+            }
+        };
+
+        var lrcText = new[]
+        {
+            "[00:01.00]島[00:02.00]島[00:03.00]島[00:04.00]",
+            "",
+            "@Ruby1=島,し[00:01.50]ま,,[00:02.00]",
+            "@Ruby2=島,じ[00:02.50]ま,[00:02.00],[00:03.00]",
+            "@Ruby3=島,と[00:03.50]う,[00:03.00]"
+        };
+
+        checkEncode(song, lrcText);
     }
 
     [Test]
     public void TestEncodeWithNoTimeRangeRuby()
     {
-        const string expected = "カラオケ\n\n@Ruby1=カ,か\n@Ruby2=ラ,ら\n@Ruby3=オ,お\n@Ruby4=ケ,け";
-
         var song = new Song
         {
             Lyrics = new List<Lyric>
@@ -349,16 +507,22 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             }
         };
 
-        var actual = Encode(song);
-        Assert.AreEqual(expected, actual);
+        var lrcText = new[]
+        {
+            "カラオケ",
+            "",
+            "@Ruby1=カ,か",
+            "@Ruby2=ラ,ら",
+            "@Ruby3=オ,お",
+            "@Ruby4=ケ,け"
+        };
+
+        checkEncode(song, lrcText);
     }
 
     [Test]
     public void TestEncodeWithRubyInDifferentLine()
     {
-        const string expected = "[00:01.00]島[00:02.00]\n[00:03.00]島[00:04.00]\n[00:05.00]島[00:06.00]\n\n"
-                                + "@Ruby1=島,しま,,[00:02.00]\n@Ruby2=島,じま,[00:03.00],[00:04.00]\n@Ruby3=島,とう,[00:05.00]";
-
         var song = new Song
         {
             Lyrics = new List<Lyric>
@@ -420,49 +584,41 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             }
         };
 
-        var actual = Encode(song);
-        Assert.AreEqual(expected, actual);
+        var lrcText = new[]
+        {
+            "[00:01.00]島[00:02.00]\n[00:03.00]島[00:04.00]\n[00:05.00]島[00:06.00]",
+            "",
+            "@Ruby1=島,しま,,[00:02.00]",
+            "@Ruby2=島,じま,[00:03.00],[00:04.00]",
+            "@Ruby3=島,とう,[00:05.00]"
+        };
+
+        checkEncode(song, lrcText);
     }
 
     [Test]
     public void TestEncodeWithEmptyFile()
     {
-        const string expected = "";
-
         var song = new Song();
+
+        var lrcText = new[]
+        {
+            ""
+        };
+
+        checkEncode(song, lrcText);
+    }
+
+    private void checkDecode(string[] lrcTexts, Song song)
+    {
+        var actual = Decode(string.Join('\n', lrcTexts));
+        AreEqual(song, actual);
+    }
+
+    private void checkEncode(Song song, string[] lrcTexts)
+    {
+        var expected = string.Join('\n', lrcTexts);
         var actual = Encode(song);
         Assert.AreEqual(expected, actual);
-    }
-
-    private static void areEqual(Song expected, Song actual)
-    {
-        var expectedLyrics = expected.Lyrics;
-        var actualLyrics = actual.Lyrics;
-        var index = Math.Max(expectedLyrics.Count, actualLyrics.Count);
-        for (int i = 0; i < index; i++)
-        {
-            areEqual(expectedLyrics[i], actualLyrics[i]);
-        }
-    }
-
-    private static void areEqual(Lyric expected, Lyric actual)
-    {
-        Assert.AreEqual(expected.Text, actual.Text);
-        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
-
-        var expectedRubies = expected.RubyTags;
-        var actualRubies = actual.RubyTags;
-        var index = Math.Max(expectedRubies.Count, actualRubies.Count);
-        for (int i = 0; i < index; i++)
-        {
-            areEqual(expectedRubies[i], actualRubies[i]);
-        }
-    }
-
-    private static void areEqual(RubyTag expected, RubyTag actual)
-    {
-        Assert.AreEqual(expected.Text, actual.Text);
-        Assert.AreEqual(expected.StartIndex, actual.StartIndex);
-        Assert.AreEqual(expected.EndIndex, actual.EndIndex);
     }
 }
