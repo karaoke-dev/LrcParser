@@ -462,6 +462,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     private static void areEqual(RubyTag expected, RubyTag actual)
     {
         Assert.AreEqual(expected.Text, actual.Text);
+        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
         Assert.AreEqual(expected.StartIndex, actual.StartIndex);
         Assert.AreEqual(expected.EndIndex, actual.EndIndex);
     }
