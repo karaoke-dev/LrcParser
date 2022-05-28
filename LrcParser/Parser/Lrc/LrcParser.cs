@@ -57,21 +57,21 @@ public class LrcParser : LyricParser
                     var startTextIndex = match.Index;
                     var endTextIndex = startTextIndex + match.Length;
 
+                    var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= startTextIndex);
+                    var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endTextIndex);
+
                     if (!hasStartTime && !hasEndTime)
                     {
                         yield return new RubyTag
                         {
                             Text = rubyTag.Ruby,
-                            TimeTags = getTimeTags(rubyTag.TimeTags),
+                            TimeTags = getTimeTags(rubyTag.TimeTags, startTimeTag.Value),
                             StartIndex = startTextIndex,
                             EndIndex = endTextIndex
                         };
                     }
                     else
                     {
-                        var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= startTextIndex);
-                        var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endTextIndex);
-
                         // should not add the ruby if is not in the time-range.
                         if(hasStartTime && rubyTag.StartTime > startTimeTag.Value)
                             continue;
@@ -82,7 +82,7 @@ public class LrcParser : LyricParser
                         yield return new RubyTag
                         {
                             Text = rubyTag.Ruby,
-                            TimeTags = getTimeTags(rubyTag.TimeTags),
+                            TimeTags = getTimeTags(rubyTag.TimeTags, startTimeTag.Value),
                             StartIndex = TextIndexUtils.ToStringIndex(startTimeTag.Key),
                             EndIndex = TextIndexUtils.ToStringIndex(endTimeTag.Key)
                         };
@@ -91,8 +91,8 @@ public class LrcParser : LyricParser
             }
         }
 
-        static SortedDictionary<TextIndex, int?> getTimeTags(SortedDictionary<TextIndex, int> timeTags)
-            => new(timeTags.ToDictionary(k => k.Key, v => v.Value as int?));
+        static SortedDictionary<TextIndex, int?> getTimeTags(SortedDictionary<TextIndex, int> timeTags, int offsetTime = 0)
+            => new(timeTags.ToDictionary(k => k.Key, v => v.Value + offsetTime as int?));
     }
 
     protected override IEnumerable<object> PreProcess(Song song)
@@ -130,9 +130,8 @@ public class LrcParser : LyricParser
                 var minStartTime = isFirst ? null : groupWithSameRuby.Min(x => x.StartTime);
                 var maxEndTime = isLast ? null : groupWithSameRuby.Max(x => x.EndTime);
 
-                var timeTags = groupWithSameRuby.SelectMany(x => x.TimeTags)
-                    .Where(x => minStartTime == null || x.Value >= minStartTime)
-                    .Where(x => maxEndTime == null || x.Value <= maxEndTime)
+                // todo: user better way to get the matched ruby tag.
+                var timeTags = groupWithSameRuby.Select(x => x.TimeTags).First()
                     .ToDictionary(k => k.Key, v => v.Value);
 
                 yield return new LrcRuby
@@ -145,9 +144,6 @@ public class LrcParser : LyricParser
                 };
             }
         }
-
-        static SortedDictionary<TextIndex, int> getTimeTags(SortedDictionary<TextIndex, int?> timeTags)
-            => new(timeTags.Where(x => x.Value.HasValue).ToDictionary(k => k.Key, v => v.Value.Value));
 
         static IEnumerable<LrcRuby> getRubyTags(Lyric lyric)
         {
@@ -165,11 +161,14 @@ public class LrcParser : LyricParser
                 {
                     Ruby = rubyTag.Text,
                     Parent = lyric.Text[startIndex..endIndex],
-                    TimeTags = getTimeTags(rubyTag.TimeTags),
+                    TimeTags = getTimeTags(rubyTag.TimeTags, -startTimeTag ?? 0),
                     StartTime = startTimeTag,
                     EndTime = endTimeTag,
                 };
             }
         }
+
+        static SortedDictionary<TextIndex, int> getTimeTags(SortedDictionary<TextIndex, int?> timeTags, int offsetTime = 0)
+            => new(timeTags.Where(x => x.Value.HasValue).ToDictionary(k => k.Key, v => v.Value!.Value + offsetTime));
     }
 }
