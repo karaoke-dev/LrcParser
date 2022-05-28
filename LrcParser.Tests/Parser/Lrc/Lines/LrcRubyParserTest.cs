@@ -41,6 +41,7 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
 
         Assert.AreEqual(expected.Ruby, actual.Ruby);
         Assert.AreEqual(expected.Parent, actual.Parent);
+        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
         Assert.AreEqual(expected.StartTime, actual.StartTime);
         Assert.AreEqual(expected.EndTime, actual.EndTime);
     }
