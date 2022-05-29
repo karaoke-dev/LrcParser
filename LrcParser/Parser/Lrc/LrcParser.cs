@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System.Text.RegularExpressions;
+using LrcParser.Extension;
 using LrcParser.Model;
 using LrcParser.Parser.Lrc.Lines;
 using LrcParser.Parser.Lrc.Metadata;
@@ -114,19 +115,25 @@ public class LrcParser : LyricParser
             yield return new object();
 
         // then, export the ruby.
+        // should group by parent first because merge the ruby should not be affect by those rubies with different ruby.
         var rubiesWithSameParent = lyrics.Select(getRubyTags).SelectMany(x => x).GroupBy(x => x.Parent);
 
         foreach (var groupWithSameParent in rubiesWithSameParent)
         {
-            // should process the value with same parent text.
-            var rubiesWithSameRuby = groupWithSameParent.GroupBy(x => new
-            {
-                x.Ruby, x.TimeTags
-            }).ToList();
+            // should group with continuous ruby.
+            var rubiesWithSameRuby = groupWithSameParent
+                                     .OrderBy(x => x.StartTime).ThenBy(x => x.EndTime)
+                                     .GroupByContinuous(x => new RubyGroup
+                                     {
+                                         Ruby = x.Ruby,
+                                         TimeTags = x.TimeTags
+                                     }).ToList();
 
+            // then, combine those continuous ruby.
             foreach (var groupWithSameRuby in rubiesWithSameRuby)
             {
                 var ruby = groupWithSameRuby.Key.Ruby;
+                var parent = groupWithSameParent.Key;
                 var timeTags = groupWithSameRuby.Key.TimeTags;
 
                 // should process the value with same parent text and ruby text.
@@ -139,7 +146,7 @@ public class LrcParser : LyricParser
                 yield return new LrcRuby
                 {
                     Ruby = ruby,
-                    Parent = groupWithSameParent.Key,
+                    Parent = parent,
                     TimeTags = timeTags,
                     StartTime = minStartTime,
                     EndTime = maxEndTime
@@ -173,4 +180,27 @@ public class LrcParser : LyricParser
         static SortedDictionary<TextIndex, int> getTimeTags(SortedDictionary<TextIndex, int?> timeTags, int offsetTime = 0)
             => new(timeTags.Where(x => x.Value.HasValue).ToDictionary(k => k.Key, v => v.Value!.Value + offsetTime));
     }
+
+    private struct RubyGroup : IEquatable<RubyGroup>
+    {
+        public string Ruby { get; set; }
+
+        public SortedDictionary<TextIndex, int> TimeTags { get; set; }
+
+        public bool Equals(RubyGroup other)
+        {
+            return Ruby == other.Ruby && TimeTags.SequenceEqual(other.TimeTags);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is RubyGroup other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Ruby);
+        }
+    }
+
 }
