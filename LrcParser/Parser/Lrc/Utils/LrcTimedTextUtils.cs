@@ -27,6 +27,7 @@ internal static class LrcTimedTextUtils
         foreach (var match in matchTimeTags.ToArray())
         {
             var endIndex = match.Index;
+
             if (startIndex < endIndex)
             {
                 // add the text.

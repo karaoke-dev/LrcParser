@@ -19,6 +19,7 @@ public class BaseLyricParserTest<TParser> where TParser : LyricParser, new()
         var expectedLyrics = expected.Lyrics;
         var actualLyrics = actual.Lyrics;
         var index = Math.Max(expectedLyrics.Count, actualLyrics.Count);
+
         for (int i = 0; i < index; i++)
         {
             areEqual(expectedLyrics[i], actualLyrics[i]);
@@ -33,6 +34,7 @@ public class BaseLyricParserTest<TParser> where TParser : LyricParser, new()
         var expectedRubies = expected.RubyTags;
         var actualRubies = actual.RubyTags;
         var index = Math.Max(expectedRubies.Count, actualRubies.Count);
+
         for (int i = 0; i < index; i++)
         {
             areEqual(expectedRubies[i], actualRubies[i]);
