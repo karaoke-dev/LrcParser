@@ -23,10 +23,10 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
     }
 
     [TestCase("@Ruby1=帰,かえ,[00:53:19],[01:24:77]", "帰", "かえ", new string[] { }, 53190, 84770)]
-    [TestCase("@Ruby1=帰,かえ,[01:24:77]", "帰", "かえ", new string[] { },84770, null)]
-    [TestCase("@Ruby1=帰,かえ,,[01:24:77]", "帰", "かえ", new string[] { },null, 84770)]
-    [TestCase("@Ruby1=帰,かえ", "帰", "かえ", new string[] { },null, null)]
-    [TestCase("@Ruby1=帰,か[00:00:50]え", "帰", "かえ", new[] { "[1,start]:500" },null, null)]
+    [TestCase("@Ruby1=帰,かえ,[01:24:77]", "帰", "かえ", new string[] { }, 84770, null)]
+    [TestCase("@Ruby1=帰,かえ,,[01:24:77]", "帰", "かえ", new string[] { }, null, 84770)]
+    [TestCase("@Ruby1=帰,かえ", "帰", "かえ", new string[] { }, null, null)]
+    [TestCase("@Ruby1=帰,か[00:00:50]え", "帰", "かえ", new[] { "[1,start]:500" }, null, null)]
     public void TestDecode(string rubyTag, string parent, string ruby, string[] timeTags, int? startTime, int? endTime)
     {
         var expected = new LrcRuby
@@ -45,7 +45,6 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
         Assert.AreEqual(expected.StartTime, actual.StartTime);
         Assert.AreEqual(expected.EndTime, actual.EndTime);
     }
-
 
     [TestCase("帰", "かえ", new string[] { }, 53190, 84770, "@Ruby1=帰,かえ,[00:53.19],[01:24.77]")]
     [TestCase("帰", "かえ", new string[] { }, 84770, null, "@Ruby1=帰,かえ,[01:24.77]")]
