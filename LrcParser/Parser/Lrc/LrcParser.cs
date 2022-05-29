@@ -40,13 +40,14 @@ public class LrcParser : LyricParser
         {
             var text = lyric.Text;
             var timeTags = lyric.TimeTags;
+
             foreach (var rubyTag in rubyTags)
             {
                 if (string.IsNullOrEmpty(rubyTag.Ruby) || string.IsNullOrEmpty(rubyTag.Parent))
                     continue;
 
-                if(rubyTag.Ruby == rubyTag.Parent)
-                   continue;
+                if (rubyTag.Ruby == rubyTag.Parent)
+                    continue;
 
                 var hasStartTime = rubyTag.StartTime.HasValue;
                 var hasEndTime = rubyTag.EndTime.HasValue;
@@ -74,10 +75,10 @@ public class LrcParser : LyricParser
                     else
                     {
                         // should not add the ruby if is not in the time-range.
-                        if(hasStartTime && rubyTag.StartTime > startTimeTag.Value)
+                        if (hasStartTime && rubyTag.StartTime > startTimeTag.Value)
                             continue;
 
-                        if(hasEndTime && rubyTag.EndTime < endTimeTag.Value)
+                        if (hasEndTime && rubyTag.EndTime < endTimeTag.Value)
                             continue;
 
                         yield return new RubyTag
@@ -202,5 +203,4 @@ public class LrcParser : LyricParser
             return HashCode.Combine(Ruby);
         }
     }
-
 }

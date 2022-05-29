@@ -124,7 +124,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 1500}
+                                { new TextIndex(1), 1500 }
                             },
                             StartIndex = 0,
                             EndIndex = 1
@@ -134,7 +134,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "じま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 2500}
+                                { new TextIndex(1), 2500 }
                             },
                             StartIndex = 1,
                             EndIndex = 2
@@ -144,7 +144,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "とう",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 3500}
+                                { new TextIndex(1), 3500 }
                             },
                             StartIndex = 2,
                             EndIndex = 3
@@ -189,7 +189,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 1400}
+                                { new TextIndex(1), 1400 }
                             },
                             StartIndex = 0,
                             EndIndex = 1
@@ -199,7 +199,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 2500}
+                                { new TextIndex(1), 2500 }
                             },
                             StartIndex = 1,
                             EndIndex = 2
@@ -209,7 +209,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 3600}
+                                { new TextIndex(1), 3600 }
                             },
                             StartIndex = 2,
                             EndIndex = 3
@@ -489,7 +489,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 1500}
+                                { new TextIndex(1), 1500 }
                             },
                             StartIndex = 0,
                             EndIndex = 1
@@ -499,7 +499,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "じま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 2500}
+                                { new TextIndex(1), 2500 }
                             },
                             StartIndex = 1,
                             EndIndex = 2
@@ -509,7 +509,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "とう",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 3500}
+                                { new TextIndex(1), 3500 }
                             },
                             StartIndex = 2,
                             EndIndex = 3
@@ -556,7 +556,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 1400}
+                                { new TextIndex(1), 1400 }
                             },
                             StartIndex = 0,
                             EndIndex = 1
@@ -566,7 +566,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                {new TextIndex(1), 2500}
+                                { new TextIndex(1), 2500 }
                             },
                             StartIndex = 1,
                             EndIndex = 2
@@ -577,7 +577,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
                                 // will merge with second time-tag
-                                {new TextIndex(1), 3500}
+                                { new TextIndex(1), 3500 }
                             },
                             StartIndex = 2,
                             EndIndex = 3
@@ -588,7 +588,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
                                 // although the relative time is same as the first time-tag, but might not be able to merge.
-                                {new TextIndex(1), 4400}
+                                { new TextIndex(1), 4400 }
                             },
                             StartIndex = 3,
                             EndIndex = 4
