@@ -15,6 +15,7 @@ public class LrcTimedTextUtilsTest
     [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22] ", "帰り道は ", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" })]
     [TestCase("帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]", "帰り道は", new[] { "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" })]
     [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は", "帰り道は", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940" })]
+    [TestCase("[00:51.00][01:29.99][01:48.29][02:31.00][02:41.99]You gotta fight !", "You gotta fight !", new string[] { "[0,start]:51000" })] // decode with invalid format.
     [TestCase("帰り道は", "帰り道は", new string[] { })]
     [TestCase("", "", new string[] { })]
     [TestCase(null, "", new string[] { })]
