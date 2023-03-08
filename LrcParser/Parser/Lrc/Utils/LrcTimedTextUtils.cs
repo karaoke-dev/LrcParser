@@ -44,7 +44,9 @@ internal static class LrcTimedTextUtils
             var state = hasText && !isEmptyStringNext ? IndexState.Start : IndexState.End;
             var textIndex = text.Length - (state == IndexState.Start ? 0 : 1);
             var time = TimeTagUtils.TimeTagToMillionSecond(match.Value);
-            timeTags.Add(new TextIndex(textIndex, state), time);
+
+            // using try add because it might be possible with duplicated time-tag position in the lyric.
+            timeTags.TryAdd(new TextIndex(textIndex, state), time);
         }
 
         // should add remaining text at the right of the end time-tag.
