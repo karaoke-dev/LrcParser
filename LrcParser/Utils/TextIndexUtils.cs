@@ -7,7 +7,23 @@ namespace LrcParser.Utils;
 
 internal static class TextIndexUtils
 {
-    internal static int ToStringIndex(TextIndex index)
+    /// <summary>
+    /// Convert text index to char index.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    internal static int ToCharIndex(TextIndex index)
+        => index.Index;
+
+    /// <summary>
+    /// Convert the text index to the index of the indicator.
+    /// </summary>
+    /// <example>
+    /// [0]カ[1]ラ[2]オ[3]ケ[4]
+    /// </example>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    internal static int ToGapIndex(TextIndex index)
         => GetValueByState(index, index.Index, index.Index + 1);
 
     internal static T GetValueByState<T>(TextIndex index, T startValue, T endValue) =>

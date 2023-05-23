@@ -64,7 +64,7 @@ internal static class LrcTimedTextUtils
         foreach (var (textIndex, time) in timeTags)
         {
             var timeTagString = TimeTagUtils.MillionSecondToTimeTag(time);
-            var stringIndex = TextIndexUtils.ToStringIndex(textIndex);
+            var stringIndex = TextIndexUtils.ToGapIndex(textIndex);
             timedText = timedText.Insert(insertIndex + stringIndex, timeTagString);
 
             insertIndex += timeTagString.Length;

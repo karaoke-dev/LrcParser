@@ -59,8 +59,8 @@ public class LrcParser : LyricParser
                     var startTextIndex = match.Index;
                     var endTextIndex = startTextIndex + match.Length;
 
-                    var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= startTextIndex);
-                    var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endTextIndex);
+                    var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToGapIndex(x.Key) >= startTextIndex);
+                    var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToGapIndex(x.Key) >= endTextIndex);
 
                     if (!hasStartTime && !hasEndTime)
                     {
@@ -85,8 +85,8 @@ public class LrcParser : LyricParser
                         {
                             Text = rubyTag.Ruby,
                             TimeTags = getTimeTags(rubyTag.TimeTags, startTimeTag.Value),
-                            StartIndex = TextIndexUtils.ToStringIndex(startTimeTag.Key),
-                            EndIndex = TextIndexUtils.ToStringIndex(endTimeTag.Key)
+                            StartIndex = TextIndexUtils.ToGapIndex(startTimeTag.Key),
+                            EndIndex = TextIndexUtils.ToGapIndex(endTimeTag.Key)
                         };
                     }
                 }
@@ -164,8 +164,8 @@ public class LrcParser : LyricParser
                 var startIndex = rubyTag.StartIndex;
                 var endIndex = rubyTag.EndIndex;
 
-                var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= startIndex && x.Value.HasValue).Value;
-                var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToStringIndex(x.Key) >= endIndex && x.Value.HasValue).Value;
+                var startTimeTag = timeTags.Reverse().LastOrDefault(x => TextIndexUtils.ToGapIndex(x.Key) >= startIndex && x.Value.HasValue).Value;
+                var endTimeTag = timeTags.FirstOrDefault(x => TextIndexUtils.ToGapIndex(x.Key) >= endIndex && x.Value.HasValue).Value;
 
                 yield return new LrcRuby
                 {
