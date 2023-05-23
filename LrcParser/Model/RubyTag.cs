@@ -12,7 +12,13 @@ public class RubyTag
     /// </summary>
     public SortedDictionary<TextIndex, int?> TimeTags { get; set; } = new();
 
-    public int StartIndex { get; set; }
+    /// <summary>
+    /// Start char index at <see cref="Lyric.Text"/>
+    /// </summary>
+    public int StartCharIndex { get; set; }
 
-    public int EndIndex { get; set; }
+    /// <summary>
+    /// Start char index at <see cref="Lyric.Text"/>
+    /// </summary>
+    public int EndCharIndex { get; set; }
 }
