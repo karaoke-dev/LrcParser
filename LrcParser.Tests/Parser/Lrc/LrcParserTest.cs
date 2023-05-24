@@ -69,20 +69,20 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "しま",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         },
                         new()
                         {
                             Text = "じま",
-                            StartIndex = 1,
-                            EndIndex = 2
+                            StartCharIndex = 1,
+                            EndCharIndex = 1
                         },
                         new()
                         {
                             Text = "とう",
-                            StartIndex = 2,
-                            EndIndex = 3
+                            StartCharIndex = 2,
+                            EndCharIndex = 2
                         }
                     }
                 },
@@ -126,8 +126,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 1500 }
                             },
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         },
                         new()
                         {
@@ -136,8 +136,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 2500 }
                             },
-                            StartIndex = 1,
-                            EndIndex = 2
+                            StartCharIndex = 1,
+                            EndCharIndex = 1
                         },
                         new()
                         {
@@ -146,8 +146,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 3500 }
                             },
-                            StartIndex = 2,
-                            EndIndex = 3
+                            StartCharIndex = 2,
+                            EndCharIndex = 2
                         }
                     }
                 },
@@ -191,8 +191,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 1400 }
                             },
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         },
                         new()
                         {
@@ -201,8 +201,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 2500 }
                             },
-                            StartIndex = 1,
-                            EndIndex = 2
+                            StartCharIndex = 1,
+                            EndCharIndex = 1
                         },
                         new()
                         {
@@ -211,8 +211,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 3600 }
                             },
-                            StartIndex = 2,
-                            EndIndex = 3
+                            StartCharIndex = 2,
+                            EndCharIndex = 2
                         }
                     }
                 },
@@ -246,26 +246,26 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "か",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         },
                         new()
                         {
                             Text = "ら",
-                            StartIndex = 1,
-                            EndIndex = 2
+                            StartCharIndex = 1,
+                            EndCharIndex = 1
                         },
                         new()
                         {
                             Text = "お",
-                            StartIndex = 2,
-                            EndIndex = 3
+                            StartCharIndex = 2,
+                            EndCharIndex = 2
                         },
                         new()
                         {
                             Text = "け",
-                            StartIndex = 3,
-                            EndIndex = 4
+                            StartCharIndex = 3,
+                            EndCharIndex = 3
                         }
                     }
                 },
@@ -305,8 +305,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "しま",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         }
                     }
                 },
@@ -323,8 +323,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "じま",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         }
                     }
                 },
@@ -341,8 +341,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "とう",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         }
                     }
                 }
@@ -433,20 +433,20 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "しま",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         },
                         new()
                         {
                             Text = "じま",
-                            StartIndex = 1,
-                            EndIndex = 2
+                            StartCharIndex = 1,
+                            EndCharIndex = 1
                         },
                         new()
                         {
                             Text = "とう",
-                            StartIndex = 2,
-                            EndIndex = 3
+                            StartCharIndex = 2,
+                            EndCharIndex = 2
                         }
                     }
                 },
@@ -491,8 +491,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 1500 }
                             },
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         },
                         new()
                         {
@@ -501,8 +501,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 2500 }
                             },
-                            StartIndex = 1,
-                            EndIndex = 2
+                            StartCharIndex = 1,
+                            EndCharIndex = 1
                         },
                         new()
                         {
@@ -511,8 +511,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 3500 }
                             },
-                            StartIndex = 2,
-                            EndIndex = 3
+                            StartCharIndex = 2,
+                            EndCharIndex = 2
                         }
                     }
                 },
@@ -558,8 +558,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 1400 }
                             },
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         },
                         new()
                         {
@@ -568,8 +568,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             {
                                 { new TextIndex(1), 2500 }
                             },
-                            StartIndex = 1,
-                            EndIndex = 2
+                            StartCharIndex = 1,
+                            EndCharIndex = 1
                         },
                         new()
                         {
@@ -579,8 +579,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                                 // will merge with second time-tag
                                 { new TextIndex(1), 3500 }
                             },
-                            StartIndex = 2,
-                            EndIndex = 3
+                            StartCharIndex = 2,
+                            EndCharIndex = 2
                         },
                         new()
                         {
@@ -590,8 +590,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                                 // although the relative time is same as the first time-tag, but might not be able to merge.
                                 { new TextIndex(1), 4400 }
                             },
-                            StartIndex = 3,
-                            EndIndex = 4
+                            StartCharIndex = 3,
+                            EndCharIndex = 3
                         }
                     }
                 },
@@ -625,26 +625,26 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "か",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         },
                         new()
                         {
                             Text = "ら",
-                            StartIndex = 1,
-                            EndIndex = 2
+                            StartCharIndex = 1,
+                            EndCharIndex = 1
                         },
                         new()
                         {
                             Text = "お",
-                            StartIndex = 2,
-                            EndIndex = 3
+                            StartCharIndex = 2,
+                            EndCharIndex = 2
                         },
                         new()
                         {
                             Text = "け",
-                            StartIndex = 3,
-                            EndIndex = 4
+                            StartCharIndex = 3,
+                            EndCharIndex = 3
                         }
                     }
                 },
@@ -684,8 +684,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "しま",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         }
                     }
                 },
@@ -702,8 +702,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "じま",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         }
                     }
                 },
@@ -720,8 +720,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         new()
                         {
                             Text = "とう",
-                            StartIndex = 0,
-                            EndIndex = 1
+                            StartCharIndex = 0,
+                            EndCharIndex = 0
                         }
                     }
                 }

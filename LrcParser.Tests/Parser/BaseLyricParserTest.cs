@@ -45,7 +45,7 @@ public class BaseLyricParserTest<TParser> where TParser : LyricParser, new()
     {
         Assert.AreEqual(expected.Text, actual.Text);
         Assert.AreEqual(expected.TimeTags, actual.TimeTags);
-        Assert.AreEqual(expected.StartIndex, actual.StartIndex);
-        Assert.AreEqual(expected.EndIndex, actual.EndIndex);
+        Assert.AreEqual(expected.StartCharIndex, actual.StartCharIndex);
+        Assert.AreEqual(expected.EndCharIndex, actual.EndCharIndex);
     }
 }
