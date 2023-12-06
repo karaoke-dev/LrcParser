@@ -20,7 +20,7 @@ public class LyricParserTest : BaseLyricParserTest<LyricParserTest.TestLyricPars
     public void TestDecodeWithEmptyFile(string lrcText)
     {
         var actual = Decode(lrcText);
-        Assert.IsEmpty(actual.Lyrics);
+        Assert.That(actual.Lyrics, Is.Empty);
     }
 
     [TestCase("karaoke\nカラオケ", new[] { "karaoke", "カラオケ" })]
@@ -30,10 +30,10 @@ public class LyricParserTest : BaseLyricParserTest<LyricParserTest.TestLyricPars
     [TestCase("karaoke\nカラオケ\n", new[] { "karaoke", "カラオケ" })]
     [TestCase("karaoke\rカラオケ\r", new[] { "karaoke", "カラオケ" })]
     [TestCase("karaoke\r\nカラオケ\r\n", new[] { "karaoke", "カラオケ" })]
-    public void TestChangeNewLine(string lrcText, string[] lyrics)
+    public void TestChangeNewLine(string lrcText, string[] expected)
     {
         var actual = Decode(lrcText);
-        Assert.AreEqual(lyrics, actual.Lyrics.Select(x => x.Text));
+        Assert.That(actual.Lyrics.Select(x => x.Text), Is.EqualTo(expected));
     }
 
     public class TestLyricParser : LyricParser

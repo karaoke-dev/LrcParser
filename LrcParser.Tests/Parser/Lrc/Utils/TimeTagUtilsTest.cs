@@ -13,7 +13,7 @@ public class TimeTagUtilsTest
     {
         var actual = TimeTagUtils.TimeTagToMillionSecond(timeTag);
 
-        Assert.AreEqual(millionSecond, actual);
+        Assert.That(actual, Is.EqualTo(millionSecond));
     }
 
     [TestCase(1000, "[00:01.00]")]
@@ -21,6 +21,6 @@ public class TimeTagUtilsTest
     {
         var actual = TimeTagUtils.MillionSecondToTimeTag(millionSecond);
 
-        Assert.AreEqual(timeTag, actual);
+        Assert.That(actual, Is.EqualTo(timeTag));
     }
 }

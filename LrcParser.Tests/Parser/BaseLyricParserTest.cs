@@ -28,8 +28,8 @@ public class BaseLyricParserTest<TParser> where TParser : LyricParser, new()
 
     private static void areEqual(Lyric expected, Lyric actual)
     {
-        Assert.AreEqual(expected.Text, actual.Text);
-        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
+        Assert.That(actual.Text, Is.EqualTo(expected.Text));
+        Assert.That(actual.TimeTags, Is.EqualTo(expected.TimeTags));
 
         var expectedRubies = expected.RubyTags;
         var actualRubies = actual.RubyTags;
@@ -43,9 +43,9 @@ public class BaseLyricParserTest<TParser> where TParser : LyricParser, new()
 
     private static void areEqual(RubyTag expected, RubyTag actual)
     {
-        Assert.AreEqual(expected.Text, actual.Text);
-        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
-        Assert.AreEqual(expected.StartCharIndex, actual.StartCharIndex);
-        Assert.AreEqual(expected.EndCharIndex, actual.EndCharIndex);
+        Assert.That(actual.Text, Is.EqualTo(expected.Text));
+        Assert.That(actual.TimeTags, Is.EqualTo(expected.TimeTags));
+        Assert.That(actual.StartCharIndex, Is.EqualTo(expected.StartCharIndex));
+        Assert.That(actual.EndCharIndex, Is.EqualTo(expected.EndCharIndex));
     }
 }
