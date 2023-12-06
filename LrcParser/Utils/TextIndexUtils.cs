@@ -26,6 +26,17 @@ internal static class TextIndexUtils
     internal static int ToGapIndex(TextIndex index)
         => GetValueByState(index, index.Index, index.Index + 1);
 
+    /// <summary>
+    /// Get the value by state.
+    /// If the state is start, then return start value.
+    /// If the state is end, then return end value.
+    /// </summary>
+    /// <param name="index"></param>
+    /// <param name="startValue"></param>
+    /// <param name="endValue"></param>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     internal static T GetValueByState<T>(TextIndex index, T startValue, T endValue) =>
         index.State switch
         {

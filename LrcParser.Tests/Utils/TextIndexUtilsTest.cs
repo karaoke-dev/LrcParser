@@ -35,8 +35,8 @@ public class TextIndexUtilsTest
 
     [TestCase(IndexState.Start, 1, -1, 1)]
     [TestCase(IndexState.End, 1, -1, -1)]
-    [TestCase(IndexState.Start, "1", "-1", "1")]
-    [TestCase(IndexState.End, "1", "-1", "-1")]
+    [TestCase(IndexState.Start, "start", "end", "start")]
+    [TestCase(IndexState.End, "start", "end", "end")]
     public void TestGetValueByState(IndexState state, object startValue, object endValue, object expected)
     {
         var textIndex = new TextIndex(0, state);
