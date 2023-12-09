@@ -14,7 +14,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var lrcText = new[]
         {
-            "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]"
+            "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]",
         };
 
         var song = new Song
@@ -31,9 +31,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(2), 18550 },
                         { new TextIndex(3), 18940 },
                         { new TextIndex(3, IndexState.End), 19220 },
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
 
         checkDecode(lrcText, song);
@@ -47,7 +47,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "[00:01:00]島[00:02:00]島[00:03:00]島[00:04:00]",
             "@Ruby1=島,しま,,[00:02:00]",
             "@Ruby2=島,じま,[00:02:00],[00:03:00]",
-            "@Ruby3=島,とう,[00:03:00]"
+            "@Ruby3=島,とう,[00:03:00]",
         };
 
         var song = new Song
@@ -70,23 +70,23 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "しま",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
+                            EndCharIndex = 0,
                         },
                         new()
                         {
                             Text = "じま",
                             StartCharIndex = 1,
-                            EndCharIndex = 1
+                            EndCharIndex = 1,
                         },
                         new()
                         {
                             Text = "とう",
                             StartCharIndex = 2,
-                            EndCharIndex = 2
-                        }
-                    }
+                            EndCharIndex = 2,
+                        },
+                    },
                 },
-            }
+            },
         };
 
         checkDecode(lrcText, song);
@@ -100,7 +100,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "[00:01:00]島[00:02:00]島[00:03:00]島[00:04:00]",
             "@Ruby1=島,し[00:00:50]ま,,[00:02:00]",
             "@Ruby2=島,じ[00:00:50]ま,[00:02:00],[00:03:00]",
-            "@Ruby3=島,と[00:00:50]う,[00:03:00]"
+            "@Ruby3=島,と[00:00:50]う,[00:03:00]",
         };
 
         var song = new Song
@@ -124,34 +124,34 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 1500 }
+                                { new TextIndex(1), 1500 },
                             },
                             StartCharIndex = 0,
-                            EndCharIndex = 0
+                            EndCharIndex = 0,
                         },
                         new()
                         {
                             Text = "じま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 2500 }
+                                { new TextIndex(1), 2500 },
                             },
                             StartCharIndex = 1,
-                            EndCharIndex = 1
+                            EndCharIndex = 1,
                         },
                         new()
                         {
                             Text = "とう",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 3500 }
+                                { new TextIndex(1), 3500 },
                             },
                             StartCharIndex = 2,
-                            EndCharIndex = 2
-                        }
-                    }
+                            EndCharIndex = 2,
+                        },
+                    },
                 },
-            }
+            },
         };
 
         checkDecode(lrcText, song);
@@ -165,7 +165,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "[00:01:00]島[00:02:00]島[00:03:00]島[00:04:00]",
             "@Ruby1=島,し[00:00:40]ま,,[00:02:00]",
             "@Ruby2=島,し[00:00:50]ま,[00:02:00],[00:03:00]",
-            "@Ruby3=島,し[00:00:60]ま,[00:03:00]"
+            "@Ruby3=島,し[00:00:60]ま,[00:03:00]",
         };
 
         var song = new Song
@@ -189,34 +189,34 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 1400 }
+                                { new TextIndex(1), 1400 },
                             },
                             StartCharIndex = 0,
-                            EndCharIndex = 0
+                            EndCharIndex = 0,
                         },
                         new()
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 2500 }
+                                { new TextIndex(1), 2500 },
                             },
                             StartCharIndex = 1,
-                            EndCharIndex = 1
+                            EndCharIndex = 1,
                         },
                         new()
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 3600 }
+                                { new TextIndex(1), 3600 },
                             },
                             StartCharIndex = 2,
-                            EndCharIndex = 2
-                        }
-                    }
+                            EndCharIndex = 2,
+                        },
+                    },
                 },
-            }
+            },
         };
 
         checkDecode(lrcText, song);
@@ -231,7 +231,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "@Ruby1=カ,か",
             "@Ruby2=ラ,ら",
             "@Ruby3=オ,お",
-            "@Ruby4=ケ,け"
+            "@Ruby4=ケ,け",
         };
 
         var song = new Song
@@ -247,29 +247,29 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "か",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
+                            EndCharIndex = 0,
                         },
                         new()
                         {
                             Text = "ら",
                             StartCharIndex = 1,
-                            EndCharIndex = 1
+                            EndCharIndex = 1,
                         },
                         new()
                         {
                             Text = "お",
                             StartCharIndex = 2,
-                            EndCharIndex = 2
+                            EndCharIndex = 2,
                         },
                         new()
                         {
                             Text = "け",
                             StartCharIndex = 3,
-                            EndCharIndex = 3
-                        }
-                    }
+                            EndCharIndex = 3,
+                        },
+                    },
                 },
-            }
+            },
         };
 
         checkDecode(lrcText, song);
@@ -285,7 +285,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "[00:05:00]島[00:06:00]",
             "@Ruby1=島,しま,,[00:02:00]",
             "@Ruby2=島,じま,[00:03:00],[00:04:00]",
-            "@Ruby3=島,とう,[00:05:00]"
+            "@Ruby3=島,とう,[00:05:00]",
         };
 
         var song = new Song
@@ -306,9 +306,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "しま",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
-                        }
-                    }
+                            EndCharIndex = 0,
+                        },
+                    },
                 },
                 new()
                 {
@@ -324,9 +324,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "じま",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
-                        }
-                    }
+                            EndCharIndex = 0,
+                        },
+                    },
                 },
                 new()
                 {
@@ -342,11 +342,11 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "とう",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
-                        }
-                    }
-                }
-            }
+                            EndCharIndex = 0,
+                        },
+                    },
+                },
+            },
         };
 
         checkDecode(lrcText, song);
@@ -359,7 +359,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
         var lrcText = new[]
         {
             "[00:01:00]島[00:02:00]",
-            "@Ruby1=島,島"
+            "@Ruby1=島,島",
         };
 
         var song = new Song
@@ -375,7 +375,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(0, IndexState.End), 2000 },
                     },
                 },
-            }
+            },
         };
 
         checkDecode(lrcText, song);
@@ -398,14 +398,14 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(2), 18550 },
                         { new TextIndex(3), 18940 },
                         { new TextIndex(3, IndexState.End), 19220 },
-                    }
-                }
-            }
+                    },
+                },
+            },
         };
 
         var lrcText = new[]
         {
-            "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]"
+            "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]",
         };
 
         checkEncode(song, lrcText);
@@ -434,23 +434,23 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "しま",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
+                            EndCharIndex = 0,
                         },
                         new()
                         {
                             Text = "じま",
                             StartCharIndex = 1,
-                            EndCharIndex = 1
+                            EndCharIndex = 1,
                         },
                         new()
                         {
                             Text = "とう",
                             StartCharIndex = 2,
-                            EndCharIndex = 2
-                        }
-                    }
+                            EndCharIndex = 2,
+                        },
+                    },
                 },
-            }
+            },
         };
 
         var lrcText = new[]
@@ -459,7 +459,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "",
             "@Ruby1=島,しま,,[00:02.00]",
             "@Ruby2=島,じま,[00:02.00],[00:03.00]",
-            "@Ruby3=島,とう,[00:03.00]"
+            "@Ruby3=島,とう,[00:03.00]",
         };
 
         checkEncode(song, lrcText);
@@ -489,34 +489,34 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 1500 }
+                                { new TextIndex(1), 1500 },
                             },
                             StartCharIndex = 0,
-                            EndCharIndex = 0
+                            EndCharIndex = 0,
                         },
                         new()
                         {
                             Text = "じま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 2500 }
+                                { new TextIndex(1), 2500 },
                             },
                             StartCharIndex = 1,
-                            EndCharIndex = 1
+                            EndCharIndex = 1,
                         },
                         new()
                         {
                             Text = "とう",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 3500 }
+                                { new TextIndex(1), 3500 },
                             },
                             StartCharIndex = 2,
-                            EndCharIndex = 2
-                        }
-                    }
+                            EndCharIndex = 2,
+                        },
+                    },
                 },
-            }
+            },
         };
 
         var lrcText = new[]
@@ -525,7 +525,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "",
             "@Ruby1=島,し[00:00.50]ま,,[00:02.00]",
             "@Ruby2=島,じ[00:00.50]ま,[00:02.00],[00:03.00]",
-            "@Ruby3=島,と[00:00.50]う,[00:03.00]"
+            "@Ruby3=島,と[00:00.50]う,[00:03.00]",
         };
 
         checkEncode(song, lrcText);
@@ -556,20 +556,20 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 1400 }
+                                { new TextIndex(1), 1400 },
                             },
                             StartCharIndex = 0,
-                            EndCharIndex = 0
+                            EndCharIndex = 0,
                         },
                         new()
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
-                                { new TextIndex(1), 2500 }
+                                { new TextIndex(1), 2500 },
                             },
                             StartCharIndex = 1,
-                            EndCharIndex = 1
+                            EndCharIndex = 1,
                         },
                         new()
                         {
@@ -577,10 +577,10 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
                                 // will merge with second time-tag
-                                { new TextIndex(1), 3500 }
+                                { new TextIndex(1), 3500 },
                             },
                             StartCharIndex = 2,
-                            EndCharIndex = 2
+                            EndCharIndex = 2,
                         },
                         new()
                         {
@@ -588,14 +588,14 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             TimeTags = new SortedDictionary<TextIndex, int?>
                             {
                                 // although the relative time is same as the first time-tag, but might not be able to merge.
-                                { new TextIndex(1), 4400 }
+                                { new TextIndex(1), 4400 },
                             },
                             StartCharIndex = 3,
-                            EndCharIndex = 3
-                        }
-                    }
+                            EndCharIndex = 3,
+                        },
+                    },
                 },
-            }
+            },
         };
 
         var lrcText = new[]
@@ -626,29 +626,29 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "か",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
+                            EndCharIndex = 0,
                         },
                         new()
                         {
                             Text = "ら",
                             StartCharIndex = 1,
-                            EndCharIndex = 1
+                            EndCharIndex = 1,
                         },
                         new()
                         {
                             Text = "お",
                             StartCharIndex = 2,
-                            EndCharIndex = 2
+                            EndCharIndex = 2,
                         },
                         new()
                         {
                             Text = "け",
                             StartCharIndex = 3,
-                            EndCharIndex = 3
-                        }
-                    }
+                            EndCharIndex = 3,
+                        },
+                    },
                 },
-            }
+            },
         };
 
         var lrcText = new[]
@@ -658,7 +658,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "@Ruby1=カ,か",
             "@Ruby2=ラ,ら",
             "@Ruby3=オ,お",
-            "@Ruby4=ケ,け"
+            "@Ruby4=ケ,け",
         };
 
         checkEncode(song, lrcText);
@@ -685,9 +685,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "しま",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
-                        }
-                    }
+                            EndCharIndex = 0,
+                        },
+                    },
                 },
                 new()
                 {
@@ -703,9 +703,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "じま",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
-                        }
-                    }
+                            EndCharIndex = 0,
+                        },
+                    },
                 },
                 new()
                 {
@@ -721,11 +721,11 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         {
                             Text = "とう",
                             StartCharIndex = 0,
-                            EndCharIndex = 0
-                        }
-                    }
-                }
-            }
+                            EndCharIndex = 0,
+                        },
+                    },
+                },
+            },
         };
 
         var lrcText = new[]
@@ -734,7 +734,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
             "",
             "@Ruby1=島,しま,,[00:02.00]",
             "@Ruby2=島,じま,[00:03.00],[00:04.00]",
-            "@Ruby3=島,とう,[00:05.00]"
+            "@Ruby3=島,とう,[00:05.00]",
         };
 
         checkEncode(song, lrcText);
@@ -747,7 +747,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var lrcText = new[]
         {
-            ""
+            "",
         };
 
         checkEncode(song, lrcText);

@@ -73,5 +73,5 @@ public enum IndexState
 {
     Start = 0,
 
-    End = 1
+    End = 1,
 }

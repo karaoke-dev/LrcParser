@@ -52,7 +52,7 @@ public class LyricParserTest : BaseLyricParserTest<LyricParserTest.TestLyricPars
                 Lyrics = lines.Select(l => new Lyric
                 {
                     Text = l,
-                }).ToList()
+                }).ToList(),
             };
         }
 
