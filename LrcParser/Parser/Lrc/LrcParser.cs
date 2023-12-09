@@ -164,6 +164,8 @@ public class LrcParser : LyricParser
             }
         }
 
+        yield break;
+
         static IEnumerable<LrcRuby> getRubyTags(Lyric lyric)
         {
             var timeTags = lyric.TimeTags;
