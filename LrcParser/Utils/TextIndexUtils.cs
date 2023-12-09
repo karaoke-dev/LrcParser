@@ -42,6 +42,6 @@ internal static class TextIndexUtils
         {
             IndexState.Start => startValue,
             IndexState.End => endValue,
-            _ => throw new ArgumentOutOfRangeException(nameof(index))
+            _ => throw new ArgumentOutOfRangeException(nameof(index)),
         };
 }

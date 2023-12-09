@@ -35,7 +35,7 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
             Ruby = ruby,
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             StartTime = startTime,
-            EndTime = endTime
+            EndTime = endTime,
         };
         var actual = Decode(rubyTag);
 
@@ -59,7 +59,7 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
             Ruby = ruby,
             TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
             StartTime = startTime,
-            EndTime = endTime
+            EndTime = endTime,
         };
         var actual = Encode(rubyTag);
 

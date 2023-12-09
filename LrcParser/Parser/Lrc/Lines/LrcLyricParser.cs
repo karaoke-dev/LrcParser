@@ -18,7 +18,7 @@ public class LrcLyricParser : SingleLineParser<LrcLyric>
         return new LrcLyric
         {
             Text = lyric,
-            TimeTags = timeTags
+            TimeTags = timeTags,
         };
     }
 

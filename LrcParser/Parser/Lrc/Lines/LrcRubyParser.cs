@@ -45,7 +45,7 @@ public class LrcRubyParser : SingleLineParser<LrcRuby>
 
         var input = $"@Ruby{index + 1}={parent},{ruby},{startTime},{endTime}";
 
-        const string remove_last_comma_pattern = @"([,]*)$";
+        const string remove_last_comma_pattern = "([,]*)$";
         return Regex.Replace(input, remove_last_comma_pattern, "");
     }
 }

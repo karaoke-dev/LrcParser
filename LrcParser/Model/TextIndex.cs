@@ -37,7 +37,7 @@ public readonly struct TextIndex : IComparable<TextIndex>, IEquatable<TextIndex>
         return Index == other.Index && State == other.State;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj is TextIndex textIndex)
             return Equals(textIndex);
@@ -73,5 +73,5 @@ public enum IndexState
 {
     Start = 0,
 
-    End = 1
+    End = 1,
 }

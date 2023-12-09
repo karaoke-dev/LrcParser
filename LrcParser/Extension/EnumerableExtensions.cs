@@ -42,6 +42,8 @@ public static class EnumerableExtensions
             list.Clear();
         }
 
+        yield break;
+
         static bool equal(TKey? key1, TKey? key2)
         {
             if (key1 == null)

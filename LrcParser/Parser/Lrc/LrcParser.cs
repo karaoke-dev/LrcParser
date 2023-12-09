@@ -31,8 +31,8 @@ public class LrcParser : LyricParser
             {
                 Text = l.Text,
                 TimeTags = getTimeTags(l.TimeTags),
-                RubyTags = getRubyTags(rubies, l).ToList()
-            }).ToList()
+                RubyTags = getRubyTags(rubies, l).ToList(),
+            }).ToList(),
         };
 
         static IEnumerable<RubyTag> getRubyTags(IEnumerable<LrcRuby> rubyTags, LrcLyric lyric)
@@ -68,7 +68,7 @@ public class LrcParser : LyricParser
                             Text = rubyTag.Ruby,
                             TimeTags = getTimeTags(rubyTag.TimeTags, startTimeTag.Value),
                             StartCharIndex = startLyricCharIndex,
-                            EndCharIndex = endLyricCharIndex
+                            EndCharIndex = endLyricCharIndex,
                         };
                     }
                     else
@@ -85,7 +85,7 @@ public class LrcParser : LyricParser
                             Text = rubyTag.Ruby,
                             TimeTags = getTimeTags(rubyTag.TimeTags, startTimeTag.Value),
                             StartCharIndex = convertStartTextIndexToCharIndex(startTimeTag.Key),
-                            EndCharIndex = convertEndTextIndexToCharIndex(endTimeTag.Key)
+                            EndCharIndex = convertEndTextIndexToCharIndex(endTimeTag.Key),
                         };
                     }
                 }
@@ -102,7 +102,7 @@ public class LrcParser : LyricParser
             {
                 IndexState.Start => textIndex.Index - 1,
                 IndexState.End => textIndex.Index,
-                _ => throw new ArgumentOutOfRangeException()
+                _ => throw new ArgumentOutOfRangeException(),
             };
     }
 
@@ -136,7 +136,7 @@ public class LrcParser : LyricParser
                                      .GroupByContinuous(x => new RubyGroup
                                      {
                                          Ruby = x.Ruby,
-                                         TimeTags = x.TimeTags
+                                         TimeTags = x.TimeTags,
                                      }).ToList();
 
             // then, combine those continuous ruby.
@@ -159,10 +159,12 @@ public class LrcParser : LyricParser
                     Parent = parent,
                     TimeTags = timeTags,
                     StartTime = minStartTime,
-                    EndTime = maxEndTime
+                    EndTime = maxEndTime,
                 };
             }
         }
+
+        yield break;
 
         static IEnumerable<LrcRuby> getRubyTags(Lyric lyric)
         {

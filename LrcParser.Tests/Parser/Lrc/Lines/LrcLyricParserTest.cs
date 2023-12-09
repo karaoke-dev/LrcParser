@@ -33,7 +33,7 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
         var expected = new LrcLyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
         var actual = Decode(lyric);
 
@@ -51,7 +51,7 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
         var lyric = new LrcLyric
         {
             Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags)
+            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
         };
         var actual = Encode(lyric);
 

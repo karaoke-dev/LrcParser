@@ -36,6 +36,7 @@ internal static class TimeTagUtils
     {
         if (timeTag.Length < 10 || timeTag[0] != '[' || !char.IsDigit(timeTag[1]))
             return -1;
+
         int minute = int.Parse(timeTag.Substring(1, 2));
         int second = int.Parse(timeTag.Substring(4, 2));
         int millionSecond = int.Parse(timeTag.Substring(7, 2));
