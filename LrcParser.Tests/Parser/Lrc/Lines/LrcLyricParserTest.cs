@@ -19,7 +19,7 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
     public void TestCanDecode(string text, bool expected)
     {
         var actual = CanDecode(text);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]", "帰り道は", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" })]
@@ -37,8 +37,8 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
         };
         var actual = Decode(lyric);
 
-        Assert.AreEqual(expected.Text, actual.Text);
-        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
+        Assert.That(actual.Text, Is.EqualTo(expected.Text));
+        Assert.That(actual.TimeTags, Is.EqualTo(expected.TimeTags));
     }
 
     [TestCase("帰り道は", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" }, "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]")]
@@ -55,6 +55,6 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
         };
         var actual = Encode(lyric);
 
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }

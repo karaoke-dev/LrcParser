@@ -18,7 +18,7 @@ public class TextIndexUtilsTest
         var textIndex = new TextIndex(index, state);
 
         int actual = TextIndexUtils.ToCharIndex(textIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(0, IndexState.Start, 0)]
@@ -30,7 +30,7 @@ public class TextIndexUtilsTest
         var textIndex = new TextIndex(index, state);
 
         int actual = TextIndexUtils.ToGapIndex(textIndex);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase(IndexState.Start, 1, -1, 1)]
@@ -42,6 +42,6 @@ public class TextIndexUtilsTest
         var textIndex = new TextIndex(0, state);
 
         object actual = TextIndexUtils.GetValueByState(textIndex, startValue, endValue);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }

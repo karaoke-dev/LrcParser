@@ -15,7 +15,7 @@ public class EnumerableExtensionsTest
     public void TestGroupByContinuous(int[] values, int[] expected)
     {
         var groups = values.GroupByContinuous(x => x);
-        Assert.AreEqual(expected, groups.Select(x => x.Key));
+        Assert.That(groups.Select(x => x.Key), Is.EqualTo(expected));
     }
 
     [TestCase(new[] { "A", "B", "C" }, new[] { "A", "B", "C" })]
@@ -23,6 +23,6 @@ public class EnumerableExtensionsTest
     public void TestGroupByContinuous(string[] values, string[] expected)
     {
         var groups = values.GroupByContinuous(x => x);
-        Assert.AreEqual(expected, groups.Select(x => x.Key));
+        Assert.That(groups.Select(x => x.Key), Is.EqualTo(expected));
     }
 }

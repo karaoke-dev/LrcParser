@@ -19,7 +19,7 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
     public void TestCanDecode(string text, bool expected)
     {
         var actual = CanDecode(text);
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase("@Ruby1=帰,かえ,[00:53:19],[01:24:77]", "帰", "かえ", new string[] { }, 53190, 84770)]
@@ -39,11 +39,11 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
         };
         var actual = Decode(rubyTag);
 
-        Assert.AreEqual(expected.Ruby, actual.Ruby);
-        Assert.AreEqual(expected.Parent, actual.Parent);
-        Assert.AreEqual(expected.TimeTags, actual.TimeTags);
-        Assert.AreEqual(expected.StartTime, actual.StartTime);
-        Assert.AreEqual(expected.EndTime, actual.EndTime);
+        Assert.That(actual.Ruby, Is.EqualTo(expected.Ruby));
+        Assert.That(actual.Parent, Is.EqualTo(expected.Parent));
+        Assert.That(actual.TimeTags, Is.EqualTo(expected.TimeTags));
+        Assert.That(actual.StartTime, Is.EqualTo(expected.StartTime));
+        Assert.That(actual.EndTime, Is.EqualTo(expected.EndTime));
     }
 
     [TestCase("帰", "かえ", new string[] { }, 53190, 84770, "@Ruby1=帰,かえ,[00:53.19],[01:24.77]")]
@@ -63,6 +63,6 @@ public class LrcRubyParserTest : BaseSingleLineParserTest<LrcRubyParser, LrcRuby
         };
         var actual = Encode(rubyTag);
 
-        Assert.AreEqual(expected, actual);
+        Assert.That(actual, Is.EqualTo(expected));
     }
 }
