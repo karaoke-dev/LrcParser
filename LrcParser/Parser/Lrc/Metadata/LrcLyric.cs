@@ -5,8 +5,12 @@ using LrcParser.Model;
 
 namespace LrcParser.Parser.Lrc.Metadata;
 
-public class LrcLyric
+public struct LrcLyric : IEquatable<LrcLyric>
 {
+    public LrcLyric()
+    {
+    }
+
     /// <summary>
     /// Text
     /// </summary>
@@ -16,4 +20,9 @@ public class LrcLyric
     /// Time tags
     /// </summary>
     public SortedDictionary<TextIndex, int> TimeTags { get; set; } = new();
+
+    public bool Equals(LrcLyric other)
+    {
+        return Text == other.Text && TimeTags.SequenceEqual(other.TimeTags);
+    }
 }

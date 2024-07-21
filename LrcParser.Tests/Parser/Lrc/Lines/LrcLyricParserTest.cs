@@ -36,8 +36,7 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
         };
         var actual = Decode(lyric);
 
-        Assert.That(actual.Text, Is.EqualTo(expected.Text));
-        Assert.That(actual.TimeTags, Is.EqualTo(expected.TimeTags));
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase("帰り道は", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" }, "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]")]

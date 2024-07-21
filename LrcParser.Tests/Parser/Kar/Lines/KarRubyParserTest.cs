@@ -39,11 +39,7 @@ public class KarRubyParserTest : BaseSingleLineParserTest<KarRubyParser, KarRuby
         };
         var actual = Decode(rubyTag);
 
-        Assert.That(actual.Ruby, Is.EqualTo(expected.Ruby));
-        Assert.That(actual.Parent, Is.EqualTo(expected.Parent));
-        Assert.That(actual.TimeTags, Is.EqualTo(expected.TimeTags));
-        Assert.That(actual.StartTime, Is.EqualTo(expected.StartTime));
-        Assert.That(actual.EndTime, Is.EqualTo(expected.EndTime));
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
     [TestCase("帰", "かえ", new string[] { }, 53190, 84770, "@Ruby1=帰,かえ,[00:53.19],[01:24.77]")]

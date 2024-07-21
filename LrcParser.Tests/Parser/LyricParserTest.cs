@@ -1,6 +1,7 @@
 // Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using LrcParser.Model;
@@ -45,13 +46,13 @@ public class LyricParserTest : BaseLyricParserTest<LyricParserTest.TestLyricPars
 
         protected override Song PostProcess(List<object> values)
         {
-            var lines = values.OfType<string>();
+            var lines = values.OfType<Line>();
 
             return new Song
             {
                 Lyrics = lines.Select(l => new Lyric
                 {
-                    Text = l,
+                    Text = l.Text,
                 }).ToList(),
             };
         }
@@ -60,14 +61,31 @@ public class LyricParserTest : BaseLyricParserTest<LyricParserTest.TestLyricPars
             => song.Lyrics.Select(lyric => lyric.Text);
     }
 
-    private class TestLineParser : SingleLineParser<string>
+    private class TestLineParser : SingleLineParser<Line>
     {
         public override bool CanDecode(string text)
             => true;
 
-        public override string Decode(string text) => text;
+        public override Line Decode(string text) => new()
+        {
+            Text = text,
+        };
 
-        public override string Encode(string component, int index)
-            => $"index:{index}, value: {component}";
+        public override string Encode(Line component, int index)
+            => $"index:{index}, value: {component.Text}";
+    }
+
+    private struct Line : IEquatable<Line>
+    {
+        public Line()
+        {
+        }
+
+        public string Text { get; set; } = string.Empty;
+
+        public bool Equals(Line other)
+        {
+            return Text == other.Text;
+        }
     }
 }

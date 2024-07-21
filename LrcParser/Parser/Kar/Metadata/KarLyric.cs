@@ -5,8 +5,12 @@ using LrcParser.Model;
 
 namespace LrcParser.Parser.Kar.Metadata;
 
-public class KarLyric
+public struct KarLyric : IEquatable<KarLyric>
 {
+    public KarLyric()
+    {
+    }
+
     /// <summary>
     /// Text
     /// </summary>
@@ -16,4 +20,9 @@ public class KarLyric
     /// Time tags
     /// </summary>
     public SortedDictionary<TextIndex, int> TimeTags { get; set; } = new();
+
+    public bool Equals(KarLyric other)
+    {
+        return Text == other.Text && TimeTags.SequenceEqual(other.TimeTags);
+    }
 }
