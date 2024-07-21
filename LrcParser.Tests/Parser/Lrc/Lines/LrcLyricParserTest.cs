@@ -15,7 +15,6 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
     [TestCase("karaoke", true)]
     [TestCase("", false)]
     [TestCase(null, false)]
-    [TestCase("@Ruby1=帰,かえ", true)] // will take off this if no other parser to process this line.
     public void TestCanDecode(string text, bool expected)
     {
         var actual = CanDecode(text);
