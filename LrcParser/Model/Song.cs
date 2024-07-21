@@ -5,5 +5,5 @@ namespace LrcParser.Model;
 
 public class Song
 {
-    public List<Lyric> Lyrics { get; set; } = new();
+    public List<Lyric> Lyrics { get; set; } = [];
 }

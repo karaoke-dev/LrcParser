@@ -19,9 +19,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "帰り道は",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -33,7 +33,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(3, IndexState.End), 19220 },
                     },
                 },
-            },
+            ],
         };
 
         checkDecode(lrcText, song);
@@ -52,9 +52,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島島島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -64,29 +64,29 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(2), 3000 },
                         { new TextIndex(2, IndexState.End), 4000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "しま",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "じま",
                             StartCharIndex = 1,
                             EndCharIndex = 1,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "とう",
                             StartCharIndex = 2,
                             EndCharIndex = 2,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         checkDecode(lrcText, song);
@@ -105,9 +105,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島島島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -117,9 +117,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(2), 3000 },
                         { new TextIndex(2, IndexState.End), 4000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -129,7 +129,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                        new()
+
+                        new RubyTag
                         {
                             Text = "じま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -139,7 +140,8 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 1,
                             EndCharIndex = 1,
                         },
-                        new()
+
+                        new RubyTag
                         {
                             Text = "とう",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -149,9 +151,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 2,
                             EndCharIndex = 2,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         checkDecode(lrcText, song);
@@ -170,9 +172,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島島島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -182,9 +184,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(2), 3000 },
                         { new TextIndex(2, IndexState.End), 4000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -194,7 +196,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -204,7 +206,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 1,
                             EndCharIndex = 1,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -214,9 +216,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 2,
                             EndCharIndex = 2,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         checkDecode(lrcText, song);
@@ -236,40 +238,40 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "カラオケ",
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "か",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "ら",
                             StartCharIndex = 1,
                             EndCharIndex = 1,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "お",
                             StartCharIndex = 2,
                             EndCharIndex = 2,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "け",
                             StartCharIndex = 3,
                             EndCharIndex = 3,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         checkDecode(lrcText, song);
@@ -290,9 +292,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -300,17 +302,18 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(0), 1000 },
                         { new TextIndex(0, IndexState.End), 2000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "しま",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                    },
+                    ],
                 },
-                new()
+
+                new Lyric
                 {
                     Text = "島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -318,17 +321,18 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(0), 3000 },
                         { new TextIndex(0, IndexState.End), 4000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "じま",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                    },
+                    ],
                 },
-                new()
+
+                new Lyric
                 {
                     Text = "島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -336,17 +340,17 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(0), 5000 },
                         { new TextIndex(0, IndexState.End), 6000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "とう",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         checkDecode(lrcText, song);
@@ -364,9 +368,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -375,7 +379,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(0, IndexState.End), 2000 },
                     },
                 },
-            },
+            ],
         };
 
         checkDecode(lrcText, song);
@@ -386,9 +390,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "帰り道は",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -400,7 +404,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(3, IndexState.End), 19220 },
                     },
                 },
-            },
+            ],
         };
 
         var lrcText = new[]
@@ -416,9 +420,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島島島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -428,29 +432,29 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(2), 3000 },
                         { new TextIndex(2, IndexState.End), 4000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "しま",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "じま",
                             StartCharIndex = 1,
                             EndCharIndex = 1,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "とう",
                             StartCharIndex = 2,
                             EndCharIndex = 2,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         var lrcText = new[]
@@ -470,9 +474,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島島島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -482,9 +486,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(2), 3000 },
                         { new TextIndex(2, IndexState.End), 4000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -494,7 +498,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "じま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -504,7 +508,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 1,
                             EndCharIndex = 1,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "とう",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -514,9 +518,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 2,
                             EndCharIndex = 2,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         var lrcText = new[]
@@ -536,9 +540,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島島島島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -549,9 +553,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(3), 4000 },
                         { new TextIndex(3, IndexState.End), 5000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -561,7 +565,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -571,7 +575,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 1,
                             EndCharIndex = 1,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -582,7 +586,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 2,
                             EndCharIndex = 2,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "しま",
                             TimeTags = new SortedDictionary<TextIndex, int?>
@@ -593,9 +597,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                             StartCharIndex = 3,
                             EndCharIndex = 3,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         var lrcText = new[]
@@ -615,40 +619,40 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "カラオケ",
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "か",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "ら",
                             StartCharIndex = 1,
                             EndCharIndex = 1,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "お",
                             StartCharIndex = 2,
                             EndCharIndex = 2,
                         },
-                        new()
+                        new RubyTag
                         {
                             Text = "け",
                             StartCharIndex = 3,
                             EndCharIndex = 3,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         var lrcText = new[]
@@ -669,9 +673,9 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var song = new Song
         {
-            Lyrics = new List<Lyric>
-            {
-                new()
+            Lyrics =
+            [
+                new Lyric
                 {
                     Text = "島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -679,17 +683,18 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(0), 1000 },
                         { new TextIndex(0, IndexState.End), 2000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "しま",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                    },
+                    ],
                 },
-                new()
+
+                new Lyric
                 {
                     Text = "島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -697,17 +702,18 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(0), 3000 },
                         { new TextIndex(0, IndexState.End), 4000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "じま",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                    },
+                    ],
                 },
-                new()
+
+                new Lyric
                 {
                     Text = "島",
                     TimeTags = new SortedDictionary<TextIndex, int?>
@@ -715,17 +721,17 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                         { new TextIndex(0), 5000 },
                         { new TextIndex(0, IndexState.End), 6000 },
                     },
-                    RubyTags = new List<RubyTag>
-                    {
-                        new()
+                    RubyTags =
+                    [
+                        new RubyTag
                         {
                             Text = "とう",
                             StartCharIndex = 0,
                             EndCharIndex = 0,
                         },
-                    },
+                    ],
                 },
-            },
+            ],
         };
 
         var lrcText = new[]

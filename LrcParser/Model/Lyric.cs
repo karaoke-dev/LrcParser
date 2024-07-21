@@ -18,5 +18,5 @@ public class Lyric
     /// <summary>
     /// Ruby tags
     /// </summary>
-    public List<RubyTag> RubyTags { get; set; } = new();
+    public List<RubyTag> RubyTags { get; set; } = [];
 }

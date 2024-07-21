@@ -40,7 +40,5 @@ public class TypeUtilsTest
         Assert.That(TypeUtils.ChangeType<double?>(null), Is.EqualTo(default(double?)));
     }
 
-    private class TestClass
-    {
-    }
+    private class TestClass;
 }

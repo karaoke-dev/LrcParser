@@ -12,7 +12,7 @@ namespace LrcParser.Parser.Lrc.Lines;
 public class LrcRubyParser : SingleLineParser<LrcRuby>
 {
     public override bool CanDecode(string text)
-        => !string.IsNullOrEmpty(text) && text.ToLower().StartsWith("@ruby");
+        => !string.IsNullOrEmpty(text) && text.ToLower().StartsWith("@ruby", StringComparison.Ordinal);
 
     public override LrcRuby Decode(string text)
     {
