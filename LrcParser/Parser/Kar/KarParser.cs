@@ -12,8 +12,11 @@ namespace LrcParser.Parser.Kar;
 /// <summary>
 /// Parser for encode and decode .kar lyric format
 /// </summary>
-public class KarParser : LyricParser
+public class KarParser : LyricParser, IHasParserConfig<KarEncodeConfig, KarDecodeConfig>
 {
+    public KarEncodeConfig EncodeConfig { get; set; } = new();
+    public KarDecodeConfig DecodeConfig { get; set; } = new();
+
     public KarParser()
     {
         Register<KarRubyParser>();

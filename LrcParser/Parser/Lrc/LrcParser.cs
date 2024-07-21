@@ -10,8 +10,11 @@ namespace LrcParser.Parser.Lrc;
 /// <summary>
 /// Parser for encode and decode .lrc lyric format
 /// </summary>
-public class LrcParser : LyricParser
+public class LrcParser : LyricParser, IHasParserConfig<LrcEncodeConfig, LrcDecodeConfig>
 {
+    public LrcEncodeConfig EncodeConfig { get; set; } = new();
+    public LrcDecodeConfig DecodeConfig { get; set; } = new();
+
     public LrcParser()
     {
         Register<LrcLyricParser>();
