@@ -29,7 +29,7 @@ public abstract class LyricParser
             return new Song();
 
         var lines = text.Split(
-            new[] { "\r\n", "\r", "\n" },
+            ["\r\n", "\r", "\n"],
             StringSplitOptions.None
         ).Where(x => !string.IsNullOrWhiteSpace(x));
 
