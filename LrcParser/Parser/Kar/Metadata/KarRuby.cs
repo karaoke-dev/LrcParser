@@ -18,12 +18,12 @@ public class KarRuby
     /// <summary>
     /// Parent kanji
     /// </summary>
-    public string Parent { get; set; } = "";
+    public string Parent { get; set; } = string.Empty;
 
     /// <summary>
     /// Ruby
     /// </summary>
-    public string Ruby { get; set; } = "";
+    public string Ruby { get; set; } = string.Empty;
 
     /// <summary>
     /// Time tags

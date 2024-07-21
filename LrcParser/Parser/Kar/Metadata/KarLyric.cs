@@ -10,7 +10,7 @@ public class KarLyric
     /// <summary>
     /// Text
     /// </summary>
-    public string Text { get; set; } = "";
+    public string Text { get; set; } = string.Empty;
 
     /// <summary>
     /// Time tags
