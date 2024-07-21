@@ -16,7 +16,13 @@ public abstract class SingleLineParser<T> : ISingleLineParser where T : class
 
     object ISingleLineParser.Decode(string text) => Decode(text);
 
-    public string Encode(object component, int index) => Encode(component as T, index);
+    public string Encode(object component, int index)
+    {
+        if (component is not T target)
+            throw new InvalidCastException();
+
+        return Encode(target, index);
+    }
 
     /// <summary>
     /// Decode to target class and leave remain text
