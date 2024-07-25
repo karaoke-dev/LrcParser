@@ -21,7 +21,7 @@ internal static class LrcTimedTextUtils
 
         var startIndex = 0;
 
-        var text = "";
+        var text = string.Empty;
         var timeTags = new SortedDictionary<TextIndex, int>();
 
         foreach (var match in matchTimeTags.ToArray())

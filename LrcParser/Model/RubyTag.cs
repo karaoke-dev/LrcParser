@@ -5,7 +5,7 @@ namespace LrcParser.Model;
 
 public class RubyTag
 {
-    public string Text { get; set; } = "";
+    public string Text { get; set; } = string.Empty;
 
     /// <summary>
     /// Time tags

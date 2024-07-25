@@ -1,6 +1,7 @@
 // Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System.Collections.Generic;
 using LrcParser.Parser.Kar.Lines;
 using LrcParser.Parser.Kar.Metadata;
 using LrcParser.Tests.Helper;
@@ -22,39 +23,115 @@ public class KarLyricParserTest : BaseSingleLineParserTest<KarLyricParser, KarLy
         Assert.That(actual, Is.EqualTo(expected));
     }
 
-    [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]", "帰り道は", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" })]
-    [TestCase("帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]", "帰り道は", new[] { "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" })]
-    [TestCase("[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は", "帰り道は", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940" })]
-    [TestCase("帰り道は", "帰り道は", new string[] { })]
-    [TestCase("", "", new string[] { })]
-    [TestCase(null, "", new string[] { })]
-    public void TestDecode(string lyric, string text, string[] timeTags)
+    [TestCaseSource(nameof(testDecodeSource))]
+    public void TestDecode(string lyric, KarLyric expected)
     {
-        var expected = new KarLyric
-        {
-            Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
-        };
         var actual = Decode(lyric);
 
-        Assert.That(actual.Text, Is.EqualTo(expected.Text));
-        Assert.That(actual.TimeTags, Is.EqualTo(expected.TimeTags));
+        Assert.That(actual, Is.EqualTo(expected));
     }
 
-    [TestCase("帰り道は", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" }, "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]")]
-    [TestCase("帰り道は", new[] { "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220" }, "帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]")]
-    [TestCase("帰り道は", new[] { "[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940" }, "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は")]
-    [TestCase("帰り道は", new string[] { }, "帰り道は")]
-    [TestCase("", new string[] { }, "")]
-    public void TestEncode(string text, string[] timeTags, string expected)
+    private static IEnumerable<object[]> testDecodeSource => new object[][]
     {
-        var lyric = new KarLyric
-        {
-            Text = text,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
-        };
+        [
+            "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]",
+            new KarLyric
+            {
+                Text = "帰り道は",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220"]),
+            },
+        ],
+        [
+            "帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]",
+            new KarLyric
+            {
+                Text = "帰り道は",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220"]),
+            },
+        ],
+        [
+            "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は",
+            new KarLyric
+            {
+                Text = "帰り道は",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940"]),
+            },
+        ],
+        [
+            "帰り道は",
+            new KarLyric
+            {
+                Text = "帰り道は",
+                TimeTags = [],
+            },
+        ],
+        [
+            "",
+            new KarLyric
+            {
+                Text = "",
+                TimeTags = [],
+            },
+        ],
+        [
+            null!,
+            new KarLyric
+            {
+                Text = "",
+                TimeTags = [],
+            },
+        ],
+    };
+
+    [TestCaseSource(nameof(testEncodeSource))]
+    public void TestEncode(KarLyric lyric, string expected)
+    {
         var actual = Encode(lyric);
 
         Assert.That(actual, Is.EqualTo(expected));
     }
+
+    private static IEnumerable<object[]> testEncodeSource => new object[][]
+    {
+        [
+            new KarLyric
+            {
+                Text = "帰り道は",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220"]),
+            },
+            "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]",
+        ],
+        [
+            new KarLyric
+            {
+                Text = "帰り道は",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220"]),
+            },
+            "帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]",
+        ],
+        [
+            new KarLyric
+            {
+                Text = "帰り道は",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940"]),
+            },
+            "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は",
+        ],
+        [
+            new KarLyric
+            {
+                Text = "帰り道は",
+                TimeTags = [],
+            },
+            "帰り道は",
+        ],
+        [
+            new KarLyric
+            {
+                Text = "",
+                TimeTags = [],
+            },
+            "",
+        ],
+    };
 }
