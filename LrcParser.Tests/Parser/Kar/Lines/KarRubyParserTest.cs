@@ -1,6 +1,8 @@
 // Copyright (c) karaoke.dev <contact@karaoke.dev>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
+using System.Collections.Generic;
 using LrcParser.Parser.Kar.Lines;
 using LrcParser.Parser.Kar.Metadata;
 using LrcParser.Tests.Helper;
@@ -22,43 +24,137 @@ public class KarRubyParserTest : BaseSingleLineParserTest<KarRubyParser, KarRuby
         Assert.That(actual, Is.EqualTo(expected));
     }
 
-    [TestCase("@Ruby1=帰,かえ,[00:53:19],[01:24:77]", "帰", "かえ", new string[] { }, 53190, 84770)]
-    [TestCase("@Ruby1=帰,かえ,[01:24:77]", "帰", "かえ", new string[] { }, 84770, null)]
-    [TestCase("@Ruby1=帰,かえ,,[01:24:77]", "帰", "かえ", new string[] { }, null, 84770)]
-    [TestCase("@Ruby1=帰,かえ", "帰", "かえ", new string[] { }, null, null)]
-    [TestCase("@Ruby1=帰,か[00:00:50]え", "帰", "かえ", new[] { "[1,start]:500" }, null, null)]
-    public void TestDecode(string rubyTag, string parent, string ruby, string[] timeTags, int? startTime, int? endTime)
+    [TestCaseSource(nameof(testDecodeSource))]
+    public void TestDecode(string rubyTag, KarRuby expected)
     {
-        var expected = new KarRuby
-        {
-            Parent = parent,
-            Ruby = ruby,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
-            StartTime = startTime,
-            EndTime = endTime,
-        };
         var actual = Decode(rubyTag);
 
         Assert.That(actual, Is.EqualTo(expected));
     }
 
-    [TestCase("帰", "かえ", new string[] { }, 53190, 84770, "@Ruby1=帰,かえ,[00:53.19],[01:24.77]")]
-    [TestCase("帰", "かえ", new string[] { }, 84770, null, "@Ruby1=帰,かえ,[01:24.77]")]
-    [TestCase("帰", "かえ", new string[] { }, null, 84770, "@Ruby1=帰,かえ,,[01:24.77]")]
-    [TestCase("帰", "かえ", new string[] { }, null, null, "@Ruby1=帰,かえ")]
-    [TestCase("帰", "かえ", new[] { "[1,start]:500" }, null, null, "@Ruby1=帰,か[00:00.50]え")]
-    public void TestEncode(string parent, string ruby, string[] timeTags, int? startTime, int? endTime, string expected)
+    private static IEnumerable<object[]> testDecodeSource => new object[][]
     {
-        var rubyTag = new KarRuby
-        {
-            Parent = parent,
-            Ruby = ruby,
-            TimeTags = TestCaseTagHelper.ParseTimeTags(timeTags),
-            StartTime = startTime,
-            EndTime = endTime,
-        };
+        [
+            "@Ruby1=帰,かえ,[00:53:19],[01:24:77]",
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(Array.Empty<string>()),
+                StartTime = 53190,
+                EndTime = 84770,
+            },
+        ],
+        [
+            "@Ruby1=帰,かえ,[01:24:77]",
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(Array.Empty<string>()),
+                StartTime = 84770,
+                EndTime = null,
+            },
+        ],
+        [
+            "@Ruby1=帰,かえ,,[01:24:77]",
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(Array.Empty<string>()),
+                StartTime = null,
+                EndTime = 84770,
+            },
+        ],
+        [
+            "@Ruby1=帰,かえ",
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(Array.Empty<string>()),
+                StartTime = null,
+                EndTime = null,
+            },
+        ],
+        [
+            "@Ruby1=帰,か[00:00:50]え",
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(new[] { "[1,start]:500" }),
+                StartTime = null,
+                EndTime = null,
+            },
+        ],
+    };
+
+    [TestCaseSource(nameof(testEncodeSources))]
+    public void TestEncode(KarRuby rubyTag, string expected)
+    {
         var actual = Encode(rubyTag);
 
         Assert.That(actual, Is.EqualTo(expected));
     }
+
+    private static IEnumerable<object[]> testEncodeSources => new object[][]
+    {
+        [
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = [],
+                StartTime = 53190,
+                EndTime = 84770,
+            },
+            "@Ruby1=帰,かえ,[00:53.19],[01:24.77]",
+        ],
+        [
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = [],
+                StartTime = 84770,
+                EndTime = null,
+            },
+            "@Ruby1=帰,かえ,[01:24.77]",
+        ],
+        [
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = [],
+                StartTime = null,
+                EndTime = 84770,
+            },
+            "@Ruby1=帰,かえ,,[01:24.77]",
+        ],
+        [
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = [],
+                StartTime = null,
+                EndTime = null,
+            },
+            "@Ruby1=帰,かえ",
+        ],
+        [
+            new KarRuby
+            {
+                Parent = "帰",
+                Ruby = "かえ",
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[1,start]:500"]),
+                StartTime = null,
+                EndTime = null,
+            },
+            "@Ruby1=帰,か[00:00.50]え",
+        ],
+    };
 }
