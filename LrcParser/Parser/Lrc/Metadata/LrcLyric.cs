@@ -17,12 +17,21 @@ public struct LrcLyric : IEquatable<LrcLyric>
     public string Text { get; set; } = string.Empty;
 
     /// <summary>
-    /// Time tags
+    /// Start times for the lyrics.
+    /// Because lrc format allows multiple start times for a single line, so it is an array.
+    /// </summary>
+    public int[] StartTimes { get; set; } = [];
+
+    /// <summary>
+    /// Time tags.
+    /// It's the relative time from the start time.
     /// </summary>
     public SortedDictionary<TextIndex, int> TimeTags { get; set; } = new();
 
     public bool Equals(LrcLyric other)
     {
-        return Text == other.Text && TimeTags.SequenceEqual(other.TimeTags);
+        return Text == other.Text
+               && StartTimes.SequenceEqual(other.StartTimes)
+               && TimeTags.SequenceEqual(other.TimeTags);
     }
 }
