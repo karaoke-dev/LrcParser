@@ -26,14 +26,23 @@ public class LrcParser : LyricParser, IHasParserConfig<LrcEncodeConfig, LrcDecod
 
         return new Song
         {
-            Lyrics = lyrics.Select(l => new Lyric
-            {
-                Text = l.Text,
-                TimeTags = getTimeTags(l.TimeTags),
-            }).ToList(),
+            Lyrics = lyrics.SelectMany(convertLyric).ToList(),
         };
 
-        static SortedDictionary<TextIndex, int?> getTimeTags(SortedDictionary<TextIndex, int> timeTags, int offsetTime = 0)
+        static IEnumerable<Lyric> convertLyric(LrcLyric lrcLyric)
+        {
+            foreach (var startTime in lrcLyric.StartTimes)
+            {
+                yield return new Lyric
+                {
+                    Text = lrcLyric.Text,
+                    StartTime = startTime,
+                    TimeTags = getTimeTags(lrcLyric.TimeTags, startTime),
+                };
+            }
+        }
+
+        static SortedDictionary<TextIndex, int?> getTimeTags(SortedDictionary<TextIndex, int> timeTags, int offsetTime)
             => new(timeTags.ToDictionary(k => k.Key, v => v.Value + offsetTime as int?));
     }
 
@@ -42,12 +51,14 @@ public class LrcParser : LyricParser, IHasParserConfig<LrcEncodeConfig, LrcDecod
         var lyrics = song.Lyrics;
 
         // first, should return the time-tag first.
+        // todo: implement the algorithm to combine the lyric with different start time but same time-tag.
         foreach (var lyric in lyrics)
         {
             yield return new LrcLyric
             {
                 Text = lyric.Text,
-                TimeTags = getTimeTags(lyric.TimeTags),
+                StartTimes = [lyric.StartTime],
+                TimeTags = getTimeTags(lyric.TimeTags, -lyric.StartTime),
             };
         }
 
