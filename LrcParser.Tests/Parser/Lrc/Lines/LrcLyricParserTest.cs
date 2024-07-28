@@ -34,27 +34,48 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
     private static IEnumerable<object[]> testDecodeSource => new object[][]
     {
         [
-            "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]",
+            "[00:17.00] <00:00.00>帰<00:01.00>り<00:02.00>道<00:03.00>は<00:04.00>",
             new LrcLyric
             {
                 Text = "帰り道は",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220"]),
+                StartTimes = [17000],
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:0", "[1,start]:1000", "[2,start]:2000", "[3,start]:3000", "[3,end]:4000"]),
             },
         ],
         [
-            "帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]",
+            "[00:17.00] 帰<00:01.00>り<00:02.00>道<00:03.00>は<00:04.00>",
             new LrcLyric
             {
                 Text = "帰り道は",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(["[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220"]),
+                StartTimes = [17000],
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[1,start]:1000", "[2,start]:2000", "[3,start]:3000", "[3,end]:4000"]),
             },
         ],
         [
-            "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は",
+            "[00:17.00] <00:00.00>帰<00:01.00>り<00:02.00>道<00:03.00>は",
             new LrcLyric
             {
                 Text = "帰り道は",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940"]),
+                StartTimes = [17000],
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:0", "[1,start]:1000", "[2,start]:2000", "[3,start]:3000"]),
+            },
+        ],
+        [
+            "[00:17.00] 帰り道は",
+            new LrcLyric
+            {
+                Text = "帰り道は",
+                StartTimes = [17000],
+                TimeTags = [],
+            },
+        ],
+        [
+            "[00:17.00][00:18.00] 帰り道は",
+            new LrcLyric
+            {
+                Text = "帰り道は",
+                StartTimes = [17000, 18000],
+                TimeTags = [],
             },
         ],
         [
@@ -62,6 +83,7 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
             new LrcLyric
             {
                 Text = "帰り道は",
+                StartTimes = [],
                 TimeTags = [],
             },
         ],
@@ -86,9 +108,16 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
     [TestCaseSource(nameof(testEncodeSource))]
     public void TestEncode(LrcLyric lyric, string expected)
     {
-        var actual = Encode(lyric);
+        if (string.IsNullOrEmpty(expected))
+        {
+            Assert.That(() => Encode(lyric), Throws.InvalidOperationException);
+        }
+        else
+        {
+            var actual = Encode(lyric);
 
-        Assert.That(actual, Is.EqualTo(expected));
+            Assert.That(actual, Is.EqualTo(expected));
+        }
     }
 
     private static IEnumerable<object[]> testEncodeSource => new object[][]
@@ -97,33 +126,37 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
             new LrcLyric
             {
                 Text = "帰り道は",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220"]),
+                StartTimes = [17000],
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:0", "[1,start]:1000", "[2,start]:2000", "[3,start]:3000", "[3,end]:4000"]),
             },
-            "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]",
+            "[00:17.00] <00:00.00>帰<00:01.00>り<00:02.00>道<00:03.00>は<00:04.00>",
         ],
         [
             new LrcLyric
             {
                 Text = "帰り道は",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(["[1,start]:18370", "[2,start]:18550", "[3,start]:18940", "[3,end]:19220"]),
+                StartTimes = [17000],
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[1,start]:1000", "[2,start]:2000", "[3,start]:3000", "[3,end]:4000"]),
             },
-            "帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]",
+            "[00:17.00] 帰<00:01.00>り<00:02.00>道<00:03.00>は<00:04.00>",
         ],
         [
             new LrcLyric
             {
                 Text = "帰り道は",
-                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:17970", "[1,start]:18370", "[2,start]:18550", "[3,start]:18940"]),
+                StartTimes = [17000],
+                TimeTags = TestCaseTagHelper.ParseTimeTags(["[0,start]:0", "[1,start]:1000", "[2,start]:2000", "[3,start]:3000"]),
             },
-            "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は",
+            "[00:17.00] <00:00.00>帰<00:01.00>り<00:02.00>道<00:03.00>は",
         ],
         [
             new LrcLyric
             {
                 Text = "帰り道は",
+                StartTimes = [17000],
                 TimeTags = [],
             },
-            "帰り道は",
+            "[00:17.00] 帰り道は",
         ],
         [
             new LrcLyric
@@ -131,7 +164,7 @@ public class LrcLyricParserTest : BaseSingleLineParserTest<LrcLyricParser, LrcLy
                 Text = "",
                 TimeTags = [],
             },
-            "",
+            null!,
         ],
     };
 }
