@@ -37,13 +37,13 @@ public class LrcParser : LyricParser, IHasParserConfig<LrcEncodeConfig, LrcDecod
                 {
                     Text = lrcLyric.Text,
                     StartTime = startTime,
-                    TimeTags = getTimeTags(lrcLyric.TimeTags, startTime),
+                    TimeTags = getTimeTags(lrcLyric.TimeTags),
                 };
             }
         }
 
-        static SortedDictionary<TextIndex, int?> getTimeTags(SortedDictionary<TextIndex, int> timeTags, int offsetTime)
-            => new(timeTags.ToDictionary(k => k.Key, v => v.Value + offsetTime as int?));
+        static SortedDictionary<TextIndex, int?> getTimeTags(SortedDictionary<TextIndex, int> timeTags)
+            => new(timeTags.ToDictionary(k => k.Key, v => v.Value as int?));
     }
 
     protected override IEnumerable<object> PreProcess(Song song)
@@ -58,7 +58,7 @@ public class LrcParser : LyricParser, IHasParserConfig<LrcEncodeConfig, LrcDecod
             {
                 Text = lyric.Text,
                 StartTimes = [lyric.StartTime],
-                TimeTags = getTimeTags(lyric.TimeTags, -lyric.StartTime),
+                TimeTags = getTimeTags(lyric.TimeTags),
             };
         }
 
@@ -72,7 +72,7 @@ public class LrcParser : LyricParser, IHasParserConfig<LrcEncodeConfig, LrcDecod
 
         yield break;
 
-        static SortedDictionary<TextIndex, int> getTimeTags(SortedDictionary<TextIndex, int?> timeTags, int offsetTime = 0)
-            => new(timeTags.Where(x => x.Value.HasValue).ToDictionary(k => k.Key, v => v.Value!.Value + offsetTime));
+        static SortedDictionary<TextIndex, int> getTimeTags(SortedDictionary<TextIndex, int?> timeTags)
+            => new(timeTags.Where(x => x.Value.HasValue).ToDictionary(k => k.Key, v => v.Value!.Value));
     }
 }

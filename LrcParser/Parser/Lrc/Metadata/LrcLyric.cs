@@ -24,7 +24,7 @@ public struct LrcLyric : IEquatable<LrcLyric>
 
     /// <summary>
     /// Time tags.
-    /// It's the relative time from the start time.
+    /// It's the absolute time.
     /// </summary>
     public SortedDictionary<TextIndex, int> TimeTags { get; set; } = new();
 

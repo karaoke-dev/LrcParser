@@ -14,7 +14,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var lrcText = new[]
         {
-            "[00:17.00] <00:00.00>帰<00:01.00>り<00:02.00>道<00:03.00>は<00:04.00>",
+            "[00:17.00] <00:17.00>帰<00:18.00>り<00:19.00>道<00:20.00>は<00:21.00>",
         };
 
         var song = new Song
@@ -65,7 +65,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var lrcText = new[]
         {
-            "[00:17.00] <00:00.00>帰<00:01.00>り<00:02.00>道<00:03.00>は<00:04.00>",
+            "[00:17.00] <00:17.00>帰<00:18.00>り<00:19.00>道<00:20.00>は<00:21.00>",
         };
 
         checkEncode(song, lrcText);
