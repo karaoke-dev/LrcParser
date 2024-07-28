@@ -25,11 +25,13 @@
         <PackageReleaseNotes>喵</PackageReleaseNotes>
         <PackageId>LrcParser</PackageId>
         <NeutralLanguage>en</NeutralLanguage>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
         <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
             <_Parameter1>$(AssemblyName).Tests</_Parameter1>
         </AssemblyAttribute>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>

@@ -10,3 +10,5 @@
 [![Dashboard](https://img.shields.io/badge/Dashboard-stonks!-informational)](https://www.repotrends.com/karaoke-dev/LrcParser)
 
 A package to encode and decode the .lrc format.
+
+See the [Changelog](https://github.com/karaoke-dev/LrcParser/blob/main/CHANGELOG.md) to check the breaking change.
