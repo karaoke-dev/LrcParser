@@ -86,3 +86,18 @@ jobs:
       - name: Deploy
         run: |
           dotnet nuget push ${{github.workspace}}/artifacts/*.nupkg --skip-duplicate --source https://api.nuget.org/v3/index.json -k ${{secrets.NUGET_AUTH_TOKEN}}
+
+        # upload the change to the github release page.
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+          files: |
+            ${{github.workspace}}/artifacts/*.nupkg
+          draft: true
+          body: |
+            Thank you for using this package. This is a tagged release (${{ env.CURRENT_TAG }}).
+      - name: Generate changelog
+        run: |
+          sudo npm install github-release-notes -g
+          gren release -T ${{secrets.RELEASE_TOKEN}} --tags=${{env.CURRENT_TAG}} --override
