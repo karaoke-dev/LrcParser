@@ -14,16 +14,20 @@ public class LrcLyricParser : SingleLineParser<LrcLyric>
 
     public override LrcLyric Decode(string text)
     {
-        var (lyric, timeTags) = LrcTimedTextUtils.TimedTextToObject(text);
+        var (startTimes, lyricText) = LrcStartTimeUtils.SplitLyricAndTimeTag(text);
+        var (lyric, timeTags) = LrcTimedTextUtils.TimedTextToObject(lyricText);
+
         return new LrcLyric
         {
             Text = lyric,
+            StartTimes = startTimes,
             TimeTags = timeTags,
         };
     }
 
     public override string Encode(LrcLyric component, int index)
     {
-        return LrcTimedTextUtils.ToTimedText(component.Text, component.TimeTags);
+        var lyricWithTimeTag = LrcTimedTextUtils.ToTimedText(component.Text, component.TimeTags);
+        return LrcStartTimeUtils.JoinLyricAndTimeTag(component.StartTimes, lyricWithTimeTag);
     }
 }

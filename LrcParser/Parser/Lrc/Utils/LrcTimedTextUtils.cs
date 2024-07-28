@@ -9,13 +9,20 @@ namespace LrcParser.Parser.Lrc.Utils;
 
 internal static class LrcTimedTextUtils
 {
+    // technically should be @"\<(\d{2,}):(\d{2})\.(\d{2})\>", but might be small case that start time format is invalid.
+    private static readonly Regex start_time_regex = new(@"\<(\d{1,}):(\d{1,})\.(\d{1,})\>");
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="timedText"></param>
+    /// <returns></returns>
     internal static Tuple<string, SortedDictionary<TextIndex, int>> TimedTextToObject(string timedText)
     {
         if (string.IsNullOrEmpty(timedText))
             return new Tuple<string, SortedDictionary<TextIndex, int>>("", new SortedDictionary<TextIndex, int>());
 
-        var timeTagRegex = new Regex(@"\[\d\d:\d\d[:.]\d\d\]");
-        var matchTimeTags = timeTagRegex.Matches(timedText);
+        var matchTimeTags = start_time_regex.Matches(timedText);
 
         var endTextIndex = timedText.Length;
 
@@ -43,7 +50,7 @@ internal static class LrcTimedTextUtils
 
             var state = hasText && !isEmptyStringNext ? IndexState.Start : IndexState.End;
             var textIndex = text.Length - (state == IndexState.Start ? 0 : 1);
-            var time = TimeTagUtils.TimeTagToMillionSecond(match.Value);
+            var time = ConvertTimeTagToMillionSecond(match.Value);
 
             // using try add because it might be possible with duplicated time-tag position in the lyric.
             timeTags.TryAdd(new TextIndex(textIndex, state), time);
@@ -55,6 +62,25 @@ internal static class LrcTimedTextUtils
         return new Tuple<string, SortedDictionary<TextIndex, int>>(text, timeTags);
     }
 
+    /// <summary>
+    /// Convert the &lt;1:00.00&gt; to 60000
+    /// </summary>
+    /// <param name="timeTag"></param>
+    /// <returns></returns>
+    internal static int ConvertTimeTagToMillionSecond(string timeTag)
+    {
+        Match match = start_time_regex.Match(timeTag);
+
+        if (!match.Success)
+            throw new InvalidOperationException("Time tag format is invalid.");
+
+        int minutes = int.Parse(match.Groups[1].Value);
+        int seconds = int.Parse(match.Groups[2].Value);
+        int hundredths = int.Parse(match.Groups[3].Value);
+
+        return minutes * 60 * 1000 + seconds * 1000 + hundredths * 10;
+    }
+
     internal static string ToTimedText(string text, SortedDictionary<TextIndex, int> timeTags)
     {
         var insertIndex = 0;
@@ -63,7 +89,7 @@ internal static class LrcTimedTextUtils
 
         foreach (var (textIndex, time) in timeTags)
         {
-            var timeTagString = TimeTagUtils.MillionSecondToTimeTag(time);
+            var timeTagString = ConvertMillionSecondToTimeTag(time);
             var stringIndex = TextIndexUtils.ToGapIndex(textIndex);
             timedText = timedText.Insert(insertIndex + stringIndex, timeTagString);
 
@@ -71,5 +97,23 @@ internal static class LrcTimedTextUtils
         }
 
         return timedText;
+    }
+
+    /// <summary>
+    /// Convert the 60000 to &lt;1:00.00&gt;
+    /// </summary>
+    /// <param name="milliseconds"></param>
+    /// <returns></returns>
+    internal static string ConvertMillionSecondToTimeTag(int milliseconds)
+    {
+        if (milliseconds < 0)
+            throw new InvalidOperationException($"{nameof(milliseconds)} should be greater than 0.");
+
+        int totalSeconds = milliseconds / 1000;
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        int hundredths = (milliseconds % 1000) / 10;
+
+        return $"<{minutes:D2}:{seconds:D2}.{hundredths:D2}>";
     }
 }

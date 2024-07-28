@@ -14,7 +14,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
     {
         var lrcText = new[]
         {
-            "[00:17:97]帰[00:18:37]り[00:18:55]道[00:18:94]は[00:19:22]",
+            "[00:17.00] <00:00.00>帰<00:01.00>り<00:02.00>道<00:03.00>は<00:04.00>",
         };
 
         var song = new Song
@@ -24,13 +24,14 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                 new Lyric
                 {
                     Text = "帰り道は",
+                    StartTime = 17000,
                     TimeTags = new SortedDictionary<TextIndex, int?>
                     {
-                        { new TextIndex(0), 17970 },
-                        { new TextIndex(1), 18370 },
-                        { new TextIndex(2), 18550 },
-                        { new TextIndex(3), 18940 },
-                        { new TextIndex(3, IndexState.End), 19220 },
+                        { new TextIndex(0), 17000 },
+                        { new TextIndex(1), 18000 },
+                        { new TextIndex(2), 19000 },
+                        { new TextIndex(3), 20000 },
+                        { new TextIndex(3, IndexState.End), 21000 },
                     },
                 },
             ],
@@ -49,13 +50,14 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
                 new Lyric
                 {
                     Text = "帰り道は",
+                    StartTime = 17000,
                     TimeTags = new SortedDictionary<TextIndex, int?>
                     {
-                        { new TextIndex(0), 17970 },
-                        { new TextIndex(1), 18370 },
-                        { new TextIndex(2), 18550 },
-                        { new TextIndex(3), 18940 },
-                        { new TextIndex(3, IndexState.End), 19220 },
+                        { new TextIndex(0), 17000 },
+                        { new TextIndex(1), 18000 },
+                        { new TextIndex(2), 19000 },
+                        { new TextIndex(3), 20000 },
+                        { new TextIndex(3, IndexState.End), 21000 },
                     },
                 },
             ],
@@ -63,7 +65,7 @@ public class LrcParserTest : BaseLyricParserTest<LrcParser.Parser.Lrc.LrcParser>
 
         var lrcText = new[]
         {
-            "[00:17.97]帰[00:18.37]り[00:18.55]道[00:18.94]は[00:19.22]",
+            "[00:17.00] <00:00.00>帰<00:01.00>り<00:02.00>道<00:03.00>は<00:04.00>",
         };
 
         checkEncode(song, lrcText);

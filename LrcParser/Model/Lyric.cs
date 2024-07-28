@@ -11,6 +11,11 @@ public class Lyric
     public string Text { get; set; } = string.Empty;
 
     /// <summary>
+    /// Start time of the lyric.
+    /// </summary>
+    public int StartTime { get; set; }
+
+    /// <summary>
     /// Time tags
     /// </summary>
     public SortedDictionary<TextIndex, int?> TimeTags { get; set; } = new();
